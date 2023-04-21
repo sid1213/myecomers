@@ -1,45 +1,59 @@
 import { useParams } from "react-router-dom";
 import { StarFilled } from "@ant-design/icons";
 import { Button, Card } from "antd";
-import { useAppSelector } from "../hooks";
-import { productState } from "../store/productSlice";
+import { useAppSelector, useAppDispatch } from "../hooks";
+import { fetchLimitedProducts } from "../store/productSlice";
+import { useEffect } from "react";
 
 function SingleProduct() {
   let { id } = useParams();
 
-  const limitedProductData = useAppSelector((state) => state.myProducts.items);
+  const dispatch = useAppDispatch();
 
-  const product: productState[] = limitedProductData.filter((ele) => {
-    return String(ele.id) === id;
-  });
+  const { error, items, loading } = useAppSelector((state) => state.myProducts);
 
-  console.log(product[0]);
+  console.log(loading);
 
   const { Meta } = Card;
 
+  useEffect(() => {
+    dispatch(fetchLimitedProducts());
+  }, [dispatch]);
+
   return (
     <div className="container">
-      <div className="singleProduct">
-        <div className="leftcontet">
-          <img src={product[0].image} alt="img" />
-        </div>
-        <div className="rightContent">
-          <h1>{product[0].title}</h1>
-          <h2>{product[0].category}</h2>
-          <span>${product[0].price}</span>
+      {loading ? (
+        items.map((ele) => {
+          if (String(ele.id) === id) {
+            return (
+              <div className="singleProduct">
+                <div className="leftcontet">
+                  <img src={ele.image} alt="img" />
+                </div>
 
-          <p>
-            Your perfect pack for everyday use and walks in the forest. Stash
-            your laptop (up to 15 inches) in the padded sleeve, your everyday
-          </p>
-          <div className="rating">
-            {[...Array(Math.ceil(product[0].rating.rate))].map((ele, index) => {
-              return <StarFilled key={index} />;
-            })}
-          </div>
-          <Button type="primary">Add to cart</Button>
-        </div>
-      </div>
+                <div className="rightContent">
+                  <h1>{ele.title}</h1>
+                  <h2>{ele.category}</h2>
+                  <span>${ele.price}</span>
+
+                  <p>{ele.description}</p>
+                  <div className="rating">
+                    {[...Array(Math.ceil(ele.rating.rate))].map(
+                      (ele, index) => {
+                        return <StarFilled key={index} />;
+                      }
+                    )}
+                  </div>
+                  <Button type="primary">Add to cart</Button>
+                </div>
+              </div>
+            );
+          }
+        })
+      ) : (
+        <div>loading</div>
+      )}
+
       <div className=" product-main">
         <Card
           hoverable

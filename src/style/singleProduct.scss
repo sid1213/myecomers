@@ -9,7 +9,9 @@
     padding: 2rem;
 
     img {
+      max-width: 0px;
       width: 100%;
+      margin: 0 auto;
       object-fit: contain;
     }
   }

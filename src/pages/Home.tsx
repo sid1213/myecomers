@@ -10,10 +10,11 @@ const { Meta } = Card;
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
-  const limitedProductData = useAppSelector((state) => state.myProducts.items);
+  const { error, items, loading } = useAppSelector((state) => state.myProducts);
   useEffect(() => {
     dispatch(fetchLimitedProducts());
-  });
+  }, [dispatch]);
+
   return (
     <div className="home">
       <Carousel className="carousel" autoplay={true} draggable>
@@ -31,19 +32,23 @@ const Home: React.FC = () => {
       <div className="container mb-2">
         <h1 className="mt-2">Best seller</h1>
         <div className=" product-main">
-          {limitedProductData.map((ele, index) => {
-            return (
-              <Link to={`/products/${ele.id}`} key={ele.id}>
-                <Card
-                  hoverable
-                  style={{ width: 300 }}
-                  cover={<img alt="example" src={ele.image} />}
-                >
-                  <Meta title={ele.title} description={`$${ele.price}`} />
-                </Card>
-              </Link>
-            );
-          })}
+          {loading ? (
+            items.map((ele, index) => {
+              return (
+                <Link to={`/products/${ele.id}`} key={ele.id}>
+                  <Card
+                    hoverable
+                    style={{ width: 200 }}
+                    cover={<img alt="example" src={ele.image} />}
+                  >
+                    <Meta title={ele.title} description={`$${ele.price}`} />
+                  </Card>
+                </Link>
+              );
+            })
+          ) : (
+            <div>Loading</div>
+          )}
         </div>
         <Button>
           <Link to="/products"> View All Products</Link>
