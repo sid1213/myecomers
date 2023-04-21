@@ -1,0 +1,14 @@
+.home {
+  //   padding: 2rem 1rem;
+  text-align: center;
+  .carousel {
+    width: 100%;
+    .carousel-img {
+      max-height: 80vh;
+      img {
+        width: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+}

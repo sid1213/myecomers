@@ -1,0 +1,53 @@
+.singleProduct {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  .leftcontet,
+  .rightContent {
+    width: 50%;
+    padding: 2rem;
+
+    img {
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+  .rightContent {
+    padding-right: 0;
+    h1,
+    h2 {
+      margin-bottom: 1rem;
+    }
+    span {
+      font-size: 2rem;
+      font-weight: bolder;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+    p {
+      display: inline-block;
+      font-weight: bold;
+      margin-bottom: 2rem;
+    }
+    .rating {
+      margin-bottom: 2rem;
+      svg {
+        position: relative;
+        fill: #f78f00;
+        width: fit-content;
+      }
+    }
+    button {
+      width: fit-content !important;
+      height: fit-content !important;
+      span {
+        font-size: 1.2rem !important;
+        margin-bottom: 0;
+      }
+    }
+  }
+  .leftcontet {
+    padding-left: 0;
+  }
+}
