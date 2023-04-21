@@ -1,8 +1,6 @@
-import { createReducer, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { wait } from "@testing-library/user-event/dist/utils";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = "";
-interface productState {
+export interface productState {
   id: number;
   title: string;
   price: number;
@@ -14,8 +12,15 @@ interface productState {
     count: number;
   };
 }
+export interface SingleproductState {
+  items: productState[];
+}
 
-export const fetchProducts = createAsyncThunk("products", async () => {
+const initialState: SingleproductState = {
+  items: [],
+};
+
+export const fetchLimitedProducts = createAsyncThunk("products", async () => {
   const res = await fetch("https://fakestoreapi.com/products?limit=9", {
     method: "GET",
   });
@@ -23,14 +28,23 @@ export const fetchProducts = createAsyncThunk("products", async () => {
   return data;
 });
 
-export const products = createSlice({
+// export const fetchSingleProduct = createAsyncThunk{
+//   "singleProduct",
+//   async()=>{
+
+//   }
+// }
+export const productsSlice = createSlice({
   name: "product",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchProducts.fulfilled, (state, action) => {
-      console.log(state);
-    });
+    builder.addCase(
+      fetchLimitedProducts.fulfilled,
+      (state, action: PayloadAction<[]>) => {
+        state.items = action.payload;
+      }
+    );
   },
 });
-export default products.reducer;
+export default productsSlice.reducer;

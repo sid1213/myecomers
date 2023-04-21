@@ -1,36 +1,39 @@
-import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { StarFilled } from "@ant-design/icons";
 import { Button, Card } from "antd";
-import { useAppDispatch } from "../hooks";
-import { fetchProducts } from "../store/productSlice";
+import { useAppSelector } from "../hooks";
+import { productState } from "../store/productSlice";
+
 function SingleProduct() {
   let { id } = useParams();
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchProducts());
+
+  const limitedProductData = useAppSelector((state) => state.myProducts.items);
+
+  const product: productState[] = limitedProductData.filter((ele) => {
+    return String(ele.id) === id;
   });
+
+  console.log(product[0]);
+
   const { Meta } = Card;
+
   return (
     <div className="container">
       <div className="singleProduct">
         <div className="leftcontet">
-          <img
-            src="https://fashion-nine.vercel.app/images/Rectangle%204%20(1).png"
-            alt="img"
-          />
+          <img src={product[0].image} alt="img" />
         </div>
         <div className="rightContent">
-          <h1>Women Printed Dress Red</h1>
-          <h2>men's clothing</h2>
-          <span>$109.95</span>
+          <h1>{product[0].title}</h1>
+          <h2>{product[0].category}</h2>
+          <span>${product[0].price}</span>
 
           <p>
             Your perfect pack for everyday use and walks in the forest. Stash
             your laptop (up to 15 inches) in the padded sleeve, your everyday
           </p>
           <div className="rating">
-            {[...Array(5)].map((ele, index) => {
+            {[...Array(Math.ceil(product[0].rating.rate))].map((ele, index) => {
               return <StarFilled key={index} />;
             })}
           </div>
