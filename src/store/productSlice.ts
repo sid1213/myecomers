@@ -28,7 +28,7 @@ export const fetchLimitedProducts = createAsyncThunk(
   "products",
   async (data, thunkAPI) => {
     try {
-      const res = await fetch("https://fakestoreapi.com/products?limit=9", {
+      const res = await fetch("https://fakestoreapi.com/products?limit=10", {
         method: "GET",
       });
       const data: SingleproductState["items"] = await res.json();

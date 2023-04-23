@@ -12,3 +12,18 @@
     }
   }
 }
+.loading {
+  display: flex;
+  gap: 2rem;
+}
+.cardSkeleton {
+  width: 100% !important;
+
+  .ant-skeleton {
+    width: 100% !important;
+  }
+  .ant-skeleton-image {
+    width: 100% !important;
+    height: 100px;
+  }
+}
