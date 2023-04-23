@@ -25,10 +25,24 @@ const initialState: SingleproductState = {
 };
 
 export const fetchLimitedProducts = createAsyncThunk(
-  "products",
+  "Limitedproducts",
   async (data, thunkAPI) => {
     try {
       const res = await fetch("https://fakestoreapi.com/products?limit=10", {
+        method: "GET",
+      });
+      const data: SingleproductState["items"] = await res.json();
+      return data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+export const fetchAllProducts = createAsyncThunk(
+  "Allproducts",
+  async (data, thunkAPI) => {
+    try {
+      const res = await fetch("https://fakestoreapi.com/products", {
         method: "GET",
       });
       const data: SingleproductState["items"] = await res.json();
@@ -49,6 +63,16 @@ export const productsSlice = createSlice({
       })
       .addCase(
         fetchLimitedProducts.fulfilled,
+        (state, action: PayloadAction<SingleproductState["items"]>) => {
+          state.loading = true;
+          state.items = action.payload;
+        }
+      )
+      .addCase(fetchAllProducts.pending, (state) => {
+        state.loading = false;
+      })
+      .addCase(
+        fetchAllProducts.fulfilled,
         (state, action: PayloadAction<SingleproductState["items"]>) => {
           state.loading = true;
           state.items = action.payload;

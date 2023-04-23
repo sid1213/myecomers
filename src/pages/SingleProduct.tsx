@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { StarFilled } from "@ant-design/icons";
-import { Button, Card } from "antd";
+import { Button, Card, Skeleton } from "antd";
 import { useAppSelector, useAppDispatch } from "../hooks";
-import { fetchLimitedProducts } from "../store/productSlice";
+import { fetchAllProducts } from "../store/productSlice";
 import { useEffect } from "react";
 
 function SingleProduct() {
@@ -17,7 +17,7 @@ function SingleProduct() {
   const { Meta } = Card;
 
   useEffect(() => {
-    dispatch(fetchLimitedProducts());
+    dispatch(fetchAllProducts());
   }, [dispatch]);
 
   return (
@@ -51,7 +51,16 @@ function SingleProduct() {
           }
         })
       ) : (
-        <div>loading</div>
+        <div>
+          <Card
+            style={{ width: 300, marginTop: 16 }}
+            actions={[<h1>$--</h1>, "none"]}
+          >
+            <Skeleton loading={loading} avatar active>
+              <Meta title={<Skeleton />} description={<Skeleton />} />
+            </Skeleton>
+          </Card>
+        </div>
       )}
 
       <div className=" product-main">

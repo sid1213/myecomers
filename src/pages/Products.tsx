@@ -1,45 +1,52 @@
-import { Card } from "antd";
+import { Card, Skeleton } from "antd";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { fetchAllProducts } from "../store/productSlice";
 const { Meta } = Card;
+
 function Products() {
+  const dispatch = useAppDispatch();
+
+  const { error, items, loading } = useAppSelector((state) => state.myProducts);
+
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  }, [dispatch]);
   return (
     <div className="container">
       <div className=" product-main">
-        <Card
-          hoverable
-          style={{ width: 300 }}
-          cover={
-            <img
-              alt="example"
-              src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-            />
-          }
-        >
-          <Meta title="Europe Street beat" description="www.instagram.com" />
-        </Card>
-        <Card
-          hoverable
-          style={{ width: 300 }}
-          cover={
-            <img
-              alt="example"
-              src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-            />
-          }
-        >
-          <Meta title="Europe Street beat" description="www.instagram.com" />
-        </Card>
-        <Card
-          hoverable
-          style={{ width: 300 }}
-          cover={
-            <img
-              alt="example"
-              src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-            />
-          }
-        >
-          <Meta title="Europe Street beat" description={`$${500}`} />
-        </Card>
+        {loading ? (
+          items.map((ele, index) => {
+            return (
+              <Link to={`/products/${ele.id}`} key={ele.id}>
+                <Card
+                  className="productCard"
+                  style={{ width: 200 }}
+                  cover={<img alt={ele.title} src={ele.image} />}
+                  actions={[<h1>${ele.price}</h1>]}
+                >
+                  <Meta title={ele.title} description={ele.category} />
+                </Card>
+              </Link>
+            );
+          })
+        ) : (
+          <div className="loading">
+            {[...Array(5)].map(() => {
+              return (
+                <Card
+                  cover={
+                    <Skeleton.Image active={false} className="cardSkeleton" />
+                  }
+                  style={{ width: 200 }}
+                >
+                  <Skeleton loading={true} active={false} />
+                </Card>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );
