@@ -7,7 +7,7 @@ import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import SingleProduct from "./pages/SingleProduct";
 import Footer from "./components/Footer";
-import { Layout, Space } from "antd";
+import { Layout } from "antd";
 function App() {
   return (
     <Router>

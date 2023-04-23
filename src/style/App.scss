@@ -8,12 +8,21 @@
 }
 ul {
   list-style: none;
+  text-align: center;
   margin: 0;
   li {
+    position: relative;
     display: inline-block;
     margin: 0 1rem;
     a {
       text-decoration: none;
+
+      font-size: 1.2rem;
+      color: rgb(41, 41, 41);
+      &:hover {
+        color: #0187ca;
+        font-weight: bolder;
+      }
     }
   }
 }
@@ -34,6 +43,9 @@ ul {
   justify-content: center;
   align-items: center;
   height: 90vh;
+}
+.text-end {
+  text-align: right;
 }
 .mt-1 {
   margin-top: 1rem;

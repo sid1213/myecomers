@@ -1,47 +1,70 @@
 header {
-  background: rgb(194, 238, 238);
+  z-index: 11;
+  position: sticky;
+  top: 0;
   width: 100%;
+  border-bottom: 1px solid #eeeeee;
+  background: white;
   .navBar {
+    text-align: center;
+    width: 100%;
     margin: auto;
     display: flex;
     padding: 1rem 1.5rem;
     gap: 0.5rem;
     justify-content: space-between;
     align-items: center;
-    .logo {
-      max-width: 3rem;
-      img {
-        width: 100%;
-        object-fit: contain;
+    .navbarRow {
+      width: 100%;
+
+      .logo {
+        max-width: 3rem;
+        img {
+          width: 100%;
+          object-fit: contain;
+        }
+      }
+      ul {
+        li {
+          position: relative;
+          a {
+            font-size: 1.2rem;
+            color: rgb(41, 41, 41);
+            &:hover {
+              color: #0187ca;
+              font-weight: bolder;
+            }
+          }
+        }
+        li:last-child {
+          .miniCartContainer {
+            display: none;
+            background: white;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            transform: translate(10%, 102%);
+          }
+          &:hover {
+            .miniCartContainer {
+              display: block;
+            }
+          }
+        }
+      }
+      .toggleBtn {
+        height: fit-content;
+        padding: 0;
       }
     }
-    ul {
-      li {
-        position: relative;
-        a {
-          font-size: 1.2rem;
-          color: rgb(41, 41, 41);
-          &:hover {
-            color: #0187ca;
-          }
-        }
-      }
-      li:last-child {
-        .miniCartContainer {
-          display: none;
-          background: white;
-          z-index: 111;
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          transform: translate(10%, 102%);
-        }
-        &:hover {
-          .miniCartContainer {
-            display: block;
-          }
-        }
-      }
+  }
+}
+.navDrawer {
+  ul {
+    li {
+      margin: 0;
+      margin-bottom: 1rem;
+      display: block;
     }
   }
 }
