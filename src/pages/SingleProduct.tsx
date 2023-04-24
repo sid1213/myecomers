@@ -72,20 +72,22 @@ function SingleProduct() {
 
       <div className=" product-main">
         {loading ? (
-          items.map((ele, index) => {
-            return (
-              <Link to={`/products/${ele.id}`} key={index}>
-                <Card
-                  className="productCard"
-                  style={{ width: 200 }}
-                  cover={<img alt={ele.title} src={ele.image} />}
-                  actions={[<h1>${ele.price}</h1>]}
-                >
-                  <Meta title={ele.title} description={ele.category} />
-                </Card>
-              </Link>
-            );
-          })
+          items
+            .filter((ele) => ele.id !== item.id)
+            .map((ele, index) => {
+              return (
+                <Link to={`/products/${ele.id}`} key={index}>
+                  <Card
+                    className="productCard"
+                    style={{ width: 200 }}
+                    cover={<img alt={ele.title} src={ele.image} />}
+                    actions={[<h1>${ele.price}</h1>]}
+                  >
+                    <Meta title={ele.title} description={ele.category} />
+                  </Card>
+                </Link>
+              );
+            })
         ) : (
           <div className="loading">
             {[...Array(5)].map((ele, index) => {
