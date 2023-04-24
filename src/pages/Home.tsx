@@ -1,5 +1,4 @@
 import { Carousel, Card, Button, Skeleton } from "antd";
-import { PlusCircleOutlined } from "@ant-design/icons";
 import img1 from "../images/MK.avif";
 import img2 from "../images/banner-1.avif";
 import { Link } from "react-router-dom";
