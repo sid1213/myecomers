@@ -8,10 +8,13 @@ const { Meta } = Card;
 function Products() {
   const dispatch = useAppDispatch();
 
-  const { error, items, loading } = useAppSelector((state) => state.myProducts);
+  const { error, items, loading } = useAppSelector(
+    (state) => state.myProducts.product
+  );
 
   useEffect(() => {
     dispatch(fetchAllProducts());
+    console.log(items);
   }, [dispatch]);
   return (
     <div className="container">
@@ -33,9 +36,10 @@ function Products() {
           })
         ) : (
           <div className="loading">
-            {[...Array(5)].map(() => {
+            {[...Array(5)].map((ele, index) => {
               return (
                 <Card
+                  key={index}
                   cover={
                     <Skeleton.Image active={false} className="cardSkeleton" />
                   }
