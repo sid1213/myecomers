@@ -4,8 +4,9 @@ import {
   PayloadAction,
   combineReducers,
 } from "@reduxjs/toolkit";
+import Item from "antd/es/list/Item";
 
-export interface productState {
+export interface ProductState {
   id: number;
   title: string;
   price: number;
@@ -18,22 +19,29 @@ export interface productState {
   };
 }
 export interface AllProductState {
-  items: productState[];
+  items: ProductState[];
   loading: boolean;
   error: null | string;
 }
-export interface singleProductState {
-  item: productState;
+export interface SingleProductState {
+  item: ProductState;
   myloading: boolean;
   myerror: null | string;
 }
-
+export interface cartState {
+  AddedProducts: {
+    cartitem: ProductState[];
+    quantity: number;
+  };
+  cartVolume: number;
+  totalAmt: number;
+}
 const initialState: AllProductState = {
   items: [],
   loading: true,
   error: "",
 };
-const singleProduct: singleProductState = {
+const singleProduct: SingleProductState = {
   item: {
     id: 0,
     title: "",
@@ -49,7 +57,14 @@ const singleProduct: singleProductState = {
   myloading: true,
   myerror: "",
 };
-
+const cart: cartState = {
+  AddedProducts: {
+    cartitem: [],
+    quantity: 0,
+  },
+  cartVolume: 0,
+  totalAmt: 0,
+};
 export const fetchLimitedProducts = createAsyncThunk(
   "Limitedproducts",
   async (limit: string | undefined, thunkAPI) => {
@@ -91,7 +106,7 @@ export const fetchSingleProduct = createAsyncThunk(
       const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
         method: "GET",
       });
-      const data: singleProductState["item"] = await res.json();
+      const data: SingleProductState["item"] = await res.json();
       return data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
@@ -139,14 +154,37 @@ export const singleProductSlice = createSlice({
       })
       .addCase(
         fetchSingleProduct.fulfilled,
-        (state, action: PayloadAction<singleProductState["item"]>) => {
+        (state, action: PayloadAction<SingleProductState["item"]>) => {
           state.myloading = true;
           state.item = action.payload;
         }
       );
   },
 });
+
+export const cartSlice = createSlice({
+  name: "cart",
+  initialState: cart,
+  reducers: {
+    addCart(state, action: PayloadAction<ProductState>) {
+      // console.log(action.payload);
+      let find = state.AddedProducts.cartitem.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      if (find >= 0) {
+        state.AddedProducts.quantity += 1;
+      } else {
+        state.AddedProducts.cartitem.push(action.payload);
+        state.AddedProducts.quantity = 1;
+      }
+    },
+  },
+});
+
+export const { addCart } = cartSlice.actions;
+
 export default combineReducers({
   product: productsSlice.reducer,
   singleProductSlice: singleProductSlice.reducer,
+  cartSlice: cartSlice.reducer,
 });

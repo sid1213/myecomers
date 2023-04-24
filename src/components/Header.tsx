@@ -9,9 +9,12 @@ import {
 import { Badge, Avatar, Col, Row, Drawer, Button, Dropdown } from "antd";
 import MiniCart from "../components/MiniCart";
 import { useState } from "react";
+import { useAppSelector } from "../hooks";
 function Header() {
   const [open, setOpen] = useState(false);
-
+  const cartitem = useAppSelector(
+    (state) => state.cartSlice.cartSlice.AddedProducts.cartitem.length
+  );
   const showDrawer = () => {
     setOpen(true);
   };
@@ -62,7 +65,7 @@ function Header() {
               <li>
                 <Dropdown menu={{ items }}>
                   <Link to="/cart" onClick={(e) => e.preventDefault()}>
-                    <Badge count={2} showZero size="small">
+                    <Badge count={cartitem} showZero size="small">
                       <Avatar icon={<ShoppingCartOutlined />}></Avatar>
                     </Badge>
                   </Link>
@@ -100,7 +103,7 @@ function Header() {
                 </li>
                 <li>
                   <Link to="/cart" onClick={onClose}>
-                    <Badge count={2} showZero size="small">
+                    <Badge count={cartitem} showZero size="small">
                       <Avatar icon={<ShoppingCartOutlined />}></Avatar>
                     </Badge>
                   </Link>

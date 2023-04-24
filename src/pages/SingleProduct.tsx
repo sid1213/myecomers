@@ -3,6 +3,7 @@ import { StarFilled } from "@ant-design/icons";
 import { Button, Card, Skeleton, Image } from "antd";
 import { useAppSelector, useAppDispatch } from "../hooks";
 import {
+  addCart,
   fetchLimitedProducts,
   fetchSingleProduct,
 } from "../store/productSlice";
@@ -12,15 +13,25 @@ function SingleProduct() {
   let { id } = useParams();
 
   const dispatch = useAppDispatch();
+
+  const cart = useAppSelector((state) => state.cartSlice.cartSlice);
+
+  console.log(cart);
+
   const { myerror, item, myloading } = useAppSelector(
     (state) => state.myProducts.singleProductSlice
   );
+
   const { error, items, loading } = useAppSelector(
     (state) => state.myProducts.product
   );
-  console.log(myloading);
 
   const { Meta } = Card;
+  const addToCart = () => {
+    if (myloading) {
+      dispatch(addCart(item));
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchSingleProduct(`${id}`));
@@ -46,7 +57,9 @@ function SingleProduct() {
                 return <StarFilled key={index} />;
               })}
             </div>
-            <Button type="primary">Add to cart</Button>
+            <Button type="primary" onClick={addToCart}>
+              Add to cart
+            </Button>
           </div>
         </div>
       ) : (
@@ -61,7 +74,7 @@ function SingleProduct() {
         {loading ? (
           items.map((ele, index) => {
             return (
-              <Link to={`/products/${ele.id}`} key={ele.id}>
+              <Link to={`/products/${ele.id}`} key={index}>
                 <Card
                   className="productCard"
                   style={{ width: 200 }}
@@ -75,13 +88,14 @@ function SingleProduct() {
           })
         ) : (
           <div className="loading">
-            {[...Array(5)].map(() => {
+            {[...Array(5)].map((ele, index) => {
               return (
                 <Card
                   cover={
                     <Skeleton.Image active={false} className="cardSkeleton" />
                   }
                   style={{ width: 200 }}
+                  key={index}
                 >
                   <Skeleton loading={true} active={false} />
                 </Card>
