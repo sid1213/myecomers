@@ -1,31 +1,38 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { StarFilled } from "@ant-design/icons";
 import { Button, Card, Skeleton, Image } from "antd";
 import { useAppSelector, useAppDispatch } from "../hooks";
-import { fetchSingleProduct } from "../store/productSlice";
+import {
+  fetchLimitedProducts,
+  fetchSingleProduct,
+} from "../store/productSlice";
 import { useEffect } from "react";
 
 function SingleProduct() {
   let { id } = useParams();
+
   const dispatch = useAppDispatch();
   const { myerror, item, myloading } = useAppSelector(
     (state) => state.myProducts.singleProductSlice
   );
-
+  const { error, items, loading } = useAppSelector(
+    (state) => state.myProducts.product
+  );
   console.log(myloading);
 
   const { Meta } = Card;
 
   useEffect(() => {
     dispatch(fetchSingleProduct(`${id}`));
-  }, [dispatch]);
+    dispatch(fetchLimitedProducts("5"));
+  }, [dispatch, id]);
 
   return (
     <div className="container">
       {myloading ? (
         <div className="singleProduct" key={item.id}>
           <div className="leftcontet">
-            <Image src={item.image} alt="img" />
+            <Image src={item.image} alt="img" className="priviewImg" />
           </div>
 
           <div className="rightContent">
@@ -44,54 +51,49 @@ function SingleProduct() {
         </div>
       ) : (
         <div>
-          <Card
-            style={{ width: 300, marginTop: 16 }}
-            actions={[<h1>$--</h1>, "none"]}
-          >
-            <Skeleton loading={true} avatar active>
-              <Meta title={<Skeleton />} description={<Skeleton />} />
-            </Skeleton>
+          <Card style={{ width: 400, height: 400 }}>
+            <Skeleton.Image active={false} className="cardSkeleton" />
           </Card>
         </div>
       )}
 
       <div className=" product-main">
-        <Card
-          hoverable
-          style={{ width: 300 }}
-          cover={
-            <img
-              alt="example"
-              src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-            />
-          }
-        >
-          <Meta title="Europe Street beat" description="www.instagram.com" />
-        </Card>
-        <Card
-          hoverable
-          style={{ width: 300 }}
-          cover={
-            <img
-              alt="example"
-              src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-            />
-          }
-        >
-          <Meta title="Europe Street beat" description="www.instagram.com" />
-        </Card>
-        <Card
-          hoverable
-          style={{ width: 300 }}
-          cover={
-            <img
-              alt="example"
-              src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-            />
-          }
-        >
-          <Meta title="Europe Street beat" description={`$${500}`} />
-        </Card>
+        {loading ? (
+          items.map((ele, index) => {
+            return (
+              <Link to={`/products/${ele.id}`} key={ele.id}>
+                <Card
+                  className="productCard"
+                  style={{ width: 200 }}
+                  cover={<img alt={ele.title} src={ele.image} />}
+                  actions={[<h1>${ele.price}</h1>]}
+                >
+                  <Meta title={ele.title} description={ele.category} />
+                </Card>
+              </Link>
+            );
+          })
+        ) : (
+          <div className="loading">
+            {[...Array(5)].map(() => {
+              return (
+                <Card
+                  cover={
+                    <Skeleton.Image active={false} className="cardSkeleton" />
+                  }
+                  style={{ width: 200 }}
+                >
+                  <Skeleton loading={true} active={false} />
+                </Card>
+              );
+            })}
+          </div>
+        )}
+        <div className="mt-3 text-center w-full">
+          <Link to="/products">
+            <Button>View All Products</Button>
+          </Link>
+        </div>
       </div>
     </div>
   );

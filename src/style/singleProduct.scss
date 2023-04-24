@@ -9,7 +9,7 @@
     padding: 2rem;
 
     img {
-      max-width: 200px;
+      max-width: 400px;
       width: 100%;
       margin: 0 auto;
       object-fit: contain;
@@ -51,5 +51,7 @@
   }
   .leftcontet {
     padding-left: 0;
+    display: flex;
+    justify-content: center;
   }
 }

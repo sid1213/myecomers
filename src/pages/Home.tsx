@@ -11,9 +11,11 @@ const { Meta } = Card;
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { error, items, loading } = useAppSelector((state) => state.myProducts);
+  const { error, items, loading } = useAppSelector(
+    (state) => state.myProducts.product
+  );
   useEffect(() => {
-    dispatch(fetchLimitedProducts());
+    dispatch(fetchLimitedProducts("10"));
   }, [dispatch]);
 
   return (
@@ -69,18 +71,20 @@ const Home: React.FC = () => {
         <div className=" product-main">
           {loading ? (
             items.map((ele, index) => {
-              return (
-                <Link to={`/products/${ele.id}`} key={ele.id}>
-                  <Card
-                    className="productCard"
-                    style={{ width: 200 }}
-                    cover={<img alt={ele.title} src={ele.image} />}
-                    actions={[<h1>${ele.price}</h1>]}
-                  >
-                    <Meta title={ele.title} description={ele.category} />
-                  </Card>
-                </Link>
-              );
+              if (ele.category === `men's clothing`) {
+                return (
+                  <Link to={`/products/${ele.id}`} key={ele.id}>
+                    <Card
+                      className="productCard"
+                      style={{ width: 200 }}
+                      cover={<img alt={ele.title} src={ele.image} />}
+                      actions={[<h1>${ele.price}</h1>]}
+                    >
+                      <Meta title={ele.title} description={ele.category} />
+                    </Card>
+                  </Link>
+                );
+              }
             })
           ) : (
             <div className="loading">
@@ -99,9 +103,9 @@ const Home: React.FC = () => {
             </div>
           )}
         </div>
-        <Button>
-          <Link to="/products"> View All Products</Link>
-        </Button>
+        <Link to="/products">
+          <Button>View All Products</Button>
+        </Link>
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import singleProductSlice from "./productSlice";
 export const store = configureStore({
   reducer: {
     myProducts: productsSlice,
-    singleProductSlice,
+    singleProductSlice: singleProductSlice,
   },
 });
 
