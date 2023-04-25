@@ -4,7 +4,6 @@ import {
   PayloadAction,
   combineReducers,
 } from "@reduxjs/toolkit";
-import Item from "antd/es/list/Item";
 
 export interface ProductState {
   id: number;
@@ -28,11 +27,12 @@ export interface SingleProductState {
   myloading: boolean;
   myerror: null | string;
 }
+interface cartDetails {
+  item: ProductState;
+  quantity: number;
+}
 export interface cartState {
-  AddedProducts: {
-    cartitem: ProductState[];
-    quantity: number;
-  };
+  AddedProducts: cartDetails[];
   cartVolume: number;
   totalAmt: number;
 }
@@ -41,6 +41,7 @@ const initialState: AllProductState = {
   loading: true,
   error: "",
 };
+
 const singleProduct: SingleProductState = {
   item: {
     id: 0,
@@ -57,14 +58,13 @@ const singleProduct: SingleProductState = {
   myloading: true,
   myerror: "",
 };
+
 const cart: cartState = {
-  AddedProducts: {
-    cartitem: [],
-    quantity: 0,
-  },
+  AddedProducts: [],
   cartVolume: 0,
   totalAmt: 0,
 };
+
 export const fetchLimitedProducts = createAsyncThunk(
   "Limitedproducts",
   async (limit: string | undefined, thunkAPI) => {
@@ -166,22 +166,26 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState: cart,
   reducers: {
-    addCart(state, action: PayloadAction<ProductState>) {
-      // console.log(action.payload);
-      let find = state.AddedProducts.cartitem.findIndex(
-        (item) => item.id === action.payload.id
+    addCart(state, action: PayloadAction<cartDetails>) {
+      console.log(action.payload);
+      let find = state.AddedProducts.findIndex(
+        (ele) => ele.item.id === action.payload.item.id
       );
       if (find >= 0) {
-        state.AddedProducts.quantity += 1;
+        state.AddedProducts[find].quantity += 1;
       } else {
-        state.AddedProducts.cartitem.push(action.payload);
-        state.AddedProducts.quantity = 1;
+        state.AddedProducts.push(action.payload);
       }
+    },
+    deleteCartItem(state, action: PayloadAction<cartDetails["item"]["id"]>) {
+      state.AddedProducts = state.AddedProducts.filter(
+        (ele) => ele.item.id !== action.payload
+      );
     },
   },
 });
 
-export const { addCart } = cartSlice.actions;
+export const { addCart, deleteCartItem } = cartSlice.actions;
 
 export default combineReducers({
   product: productsSlice.reducer,

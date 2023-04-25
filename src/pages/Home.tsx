@@ -10,9 +10,11 @@ const { Meta } = Card;
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
+
   const { error, items, loading } = useAppSelector(
     (state) => state.myProducts.product
   );
+
   useEffect(() => {
     dispatch(fetchLimitedProducts("10"));
   }, [dispatch]);
@@ -35,7 +37,7 @@ const Home: React.FC = () => {
         <h1 className="mt-2 heading">Trending products</h1>
         <div className=" product-main">
           {loading ? (
-            items.map((ele, index) => {
+            items.map((ele) => {
               return (
                 <Link to={`/products/${ele.id}`} key={ele.id}>
                   <Card
@@ -51,9 +53,10 @@ const Home: React.FC = () => {
             })
           ) : (
             <div className="loading">
-              {[...Array(5)].map(() => {
+              {[...Array(5)].map((ele, index) => {
                 return (
                   <Card
+                    key={index}
                     cover={
                       <Skeleton.Image active={false} className="cardSkeleton" />
                     }
@@ -69,8 +72,9 @@ const Home: React.FC = () => {
         <h1 className="mt-2 heading">Men's product</h1>
         <div className=" product-main">
           {loading ? (
-            items.map((ele, index) => {
-              if (ele.category === `men's clothing`) {
+            items
+              .filter((ele) => ele.category === "men's clothing")
+              .map((ele) => {
                 return (
                   <Link to={`/products/${ele.id}`} key={ele.id}>
                     <Card
@@ -83,13 +87,13 @@ const Home: React.FC = () => {
                     </Card>
                   </Link>
                 );
-              }
-            })
+              })
           ) : (
             <div className="loading">
-              {[...Array(5)].map(() => {
+              {[...Array(5)].map((ele, index) => {
                 return (
                   <Card
+                    key={index}
                     cover={
                       <Skeleton.Image active={false} className="cardSkeleton" />
                     }

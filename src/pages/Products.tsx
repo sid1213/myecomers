@@ -16,11 +16,12 @@ function Products() {
     dispatch(fetchAllProducts());
     console.log(items);
   }, [dispatch]);
+
   return (
     <div className="container">
       <div className=" product-main">
         {loading ? (
-          items.map((ele, index) => {
+          items.map((ele) => {
             return (
               <Link to={`/products/${ele.id}`} key={ele.id}>
                 <Card

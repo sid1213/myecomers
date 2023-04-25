@@ -26,10 +26,13 @@ function SingleProduct() {
     (state) => state.myProducts.product
   );
 
+  let quantity = 1; //initial quantity
+
   const { Meta } = Card;
+
   const addToCart = () => {
     if (myloading) {
-      dispatch(addCart(item));
+      dispatch(addCart({ item, quantity }));
     }
   };
 
@@ -41,7 +44,7 @@ function SingleProduct() {
   return (
     <div className="container">
       {myloading ? (
-        <div className="singleProduct" key={item.id}>
+        <div className="singleProduct">
           <div className="leftcontet">
             <Image src={item.image} alt="img" className="priviewImg" />
           </div>
@@ -74,9 +77,9 @@ function SingleProduct() {
         {loading ? (
           items
             .filter((ele) => ele.id !== item.id)
-            .map((ele, index) => {
+            .map((ele) => {
               return (
-                <Link to={`/products/${ele.id}`} key={index}>
+                <Link to={`/products/${ele.id}`} key={ele.id}>
                   <Card
                     className="productCard"
                     style={{ width: 200 }}
