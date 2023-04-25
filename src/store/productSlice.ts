@@ -27,7 +27,7 @@ export interface SingleProductState {
   myloading: boolean;
   myerror: null | string;
 }
-interface cartDetails {
+export interface cartDetails {
   item: ProductState;
   quantity: number;
 }
@@ -35,6 +35,10 @@ export interface cartState {
   AddedProducts: cartDetails[];
   cartVolume: number;
   totalAmt: number;
+}
+export interface AddAndRemoveItemState {
+  id: ProductState["id"];
+  operator: "minus" | "plus";
 }
 const initialState: AllProductState = {
   items: [],
@@ -182,10 +186,24 @@ export const cartSlice = createSlice({
         (ele) => ele.item.id !== action.payload
       );
     },
+    addAndRemoveItem(state, action: PayloadAction<AddAndRemoveItemState>) {
+      let find = state.AddedProducts.findIndex(
+        (ele) => ele.item.id === action.payload.id
+      );
+
+      if (
+        action.payload.operator === "minus" &&
+        state.AddedProducts[find].quantity !== 1
+      ) {
+        state.AddedProducts[find].quantity -= 1;
+      } else if (action.payload.operator === "plus") {
+        state.AddedProducts[find].quantity += 1;
+      }
+    },
   },
 });
 
-export const { addCart, deleteCartItem } = cartSlice.actions;
+export const { addCart, deleteCartItem, addAndRemoveItem } = cartSlice.actions;
 
 export default combineReducers({
   product: productsSlice.reducer,
