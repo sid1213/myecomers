@@ -3,4 +3,15 @@
   .cartRow {
     justify-content: space-between;
   }
+  .btn {
+    height: fit-content;
+    padding: 1rem 0;
+    background: #f54915;
+    color: white;
+    font-weight: 900;
+    &:hover {
+      background: black;
+      color: white;
+    }
+  }
 }

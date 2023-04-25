@@ -1,9 +1,10 @@
-import { Row, Col, Table, Image, Card } from "antd";
+import { Row, Col, Table, Image, Card, Button } from "antd";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { DeleteOutlined } from "@ant-design/icons";
 import ItemCounter from "../components/ItemCounter";
 import { useEffect } from "react";
 import { deleteCartItem } from "../store/productSlice";
+import { Link } from "react-router-dom";
 function Cart() {
   const dataArr = useAppSelector(
     (state) => state.cartSlice.cartSlice.AddedProducts
@@ -77,47 +78,56 @@ function Cart() {
             style={{ width: "100%" }}
             className="text-center"
           >
-            <div>
-              <Row>
-                <Col span={12}>
-                  <h1>SubTotal</h1>
-                </Col>
-                <Col span={12}>
-                  {" "}
-                  <h1>
-                    $
-                    {dataArr
-                      .reduce(
-                        (total, ele) =>
-                          (total = total + ele.item.price * ele.quantity),
-                        0
-                      )
-                      .toFixed(2)}
-                  </h1>
-                </Col>
-              </Row>
-              <br />
-              <hr />
+            {dataArr.length ? (
+              <div>
+                <Row>
+                  <Col span={12}>
+                    <h1>SubTotal</h1>
+                  </Col>
+                  <Col span={12}>
+                    {" "}
+                    <h1>
+                      $
+                      {dataArr
+                        .reduce(
+                          (total, ele) =>
+                            (total = total + ele.item.price * ele.quantity),
+                          0
+                        )
+                        .toFixed(2)}
+                    </h1>
+                  </Col>
+                </Row>
+                <br />
+                <hr />
 
-              <Row className="mt-1">
-                <Col span={12}>
-                  <h1>Grand total</h1>
-                </Col>
-                <Col span={12}>
-                  {" "}
-                  <h1>
-                    $
-                    {dataArr
-                      .reduce(
-                        (total, ele) =>
-                          (total = total + ele.item.price * ele.quantity),
-                        0
-                      )
-                      .toFixed(2)}
-                  </h1>
-                </Col>
-              </Row>
-            </div>
+                <Row className="mt-1">
+                  <Col span={12}>
+                    <h1>Grand total</h1>
+                  </Col>
+                  <Col span={12}>
+                    {" "}
+                    <h1>
+                      $
+                      {dataArr
+                        .reduce(
+                          (total, ele) =>
+                            (total = total + ele.item.price * ele.quantity),
+                          0
+                        )
+                        .toFixed(2)}
+                    </h1>
+                  </Col>
+                </Row>
+                <Link to="/checkout">
+                  <Button className="mt-3 w-full p-0 btn">
+                    <h3>Checkout</h3>
+                  </Button>
+                </Link>
+              </div>
+            ) : (
+              " Add Products to Cart"
+            )}
           </Card>
         </Col>
       </Row>

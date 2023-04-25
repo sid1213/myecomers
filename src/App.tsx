@@ -8,6 +8,7 @@ import Cart from "./pages/Cart";
 import SingleProduct from "./pages/SingleProduct";
 import Footer from "./components/Footer";
 import { Layout } from "antd";
+import Checkout from "./pages/Checkout";
 function App() {
   return (
     <Router>
@@ -19,6 +20,7 @@ function App() {
           <Route path="/products/:id?" element={<SingleProduct />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="*" element={<h1>404 not found</h1>} />
         </Routes>
         <Footer />
