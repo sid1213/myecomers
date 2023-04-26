@@ -40,6 +40,15 @@ export interface AddAndRemoveItemState {
   id: ProductState["id"];
   operator: "minus" | "plus";
 }
+export interface userState {
+  user: {
+    name: string;
+    userName: string;
+    password: string;
+  };
+  userCart: [];
+  userOrder: [];
+}
 const initialState: AllProductState = {
   items: [],
   loading: true,
@@ -68,6 +77,8 @@ const cart: cartState = {
   cartVolume: 0,
   totalAmt: 0,
 };
+
+const userDetails: userState[] = [];
 
 export const fetchLimitedProducts = createAsyncThunk(
   "Limitedproducts",
@@ -203,10 +214,22 @@ export const cartSlice = createSlice({
   },
 });
 
+export const userSlice = createSlice({
+  name: "user",
+  initialState: userDetails,
+  reducers: {
+    addUser(state, action: PayloadAction<userState>) {
+      state.push(action.payload);
+    },
+  },
+});
+
 export const { addCart, deleteCartItem, addAndRemoveItem } = cartSlice.actions;
+export const { addUser } = userSlice.actions;
 
 export default combineReducers({
   product: productsSlice.reducer,
   singleProductSlice: singleProductSlice.reducer,
   cartSlice: cartSlice.reducer,
+  userSlice: userSlice.reducer,
 });
