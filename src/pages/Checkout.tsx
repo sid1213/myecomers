@@ -12,7 +12,6 @@ import {
 } from "antd";
 
 import { useAppSelector } from "../hooks";
-import { Link } from "react-router-dom";
 
 const onFinish = (values: any) => {
   console.log(values);
