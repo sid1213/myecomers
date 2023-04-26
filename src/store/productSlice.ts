@@ -4,7 +4,6 @@ import {
   PayloadAction,
   combineReducers,
 } from "@reduxjs/toolkit";
-
 export interface ProductState {
   id: number;
   title: string;
@@ -78,8 +77,18 @@ const cart: cartState = {
   cartVolume: 0,
   totalAmt: 0,
 };
-
-const userDetails: userState[] = [];
+const getUserDetailFromLocalStorage = (): [] => {
+  let taskBox = localStorage.getItem("user-detail");
+  if (taskBox) {
+    return JSON.parse(taskBox || "");
+  } else {
+    return [];
+  }
+};
+const setTodoOnLocalStorage = (state: userState[]) => {
+  localStorage.setItem("user-detail", JSON.stringify(state));
+};
+const userDetails: userState[] = getUserDetailFromLocalStorage();
 
 export const fetchLimitedProducts = createAsyncThunk(
   "Limitedproducts",
@@ -221,6 +230,7 @@ export const userSlice = createSlice({
   reducers: {
     addUser(state, action: PayloadAction<userState>) {
       state.push(action.payload);
+      setTodoOnLocalStorage(state);
     },
   },
 });
