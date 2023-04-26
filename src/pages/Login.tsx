@@ -17,6 +17,7 @@ const Login: React.FC = () => {
     let userIndex = userCheck.findIndex(
       (ele) => ele.user.userName === values.username
     );
+
     if (userCheck.find((ele) => ele.user.userName === values.username)) {
       if (userCheck.find((ele) => ele.user.password === values.password)) {
         message.success(userCheck[userIndex].user.name);
@@ -74,7 +75,12 @@ const Login: React.FC = () => {
               Submit
             </Button>
           </Form.Item>
-          <Link to="/signup"> signup</Link>
+          <h1>
+            Click to{" "}
+            <Link to="/signup" className="ms-2">
+              Signup
+            </Link>
+          </h1>
         </Form>
       ) : (
         <User name={userCheck[userLoginStatus.userIndex].user.name} />

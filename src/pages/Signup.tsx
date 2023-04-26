@@ -5,6 +5,8 @@ import { addUser } from "../store/productSlice";
 import { Link } from "react-router-dom";
 
 const Signup = () => {
+  const [form] = Form.useForm();
+
   const dispatch = useAppDispatch();
 
   const userCheck = useAppSelector((state) => state.userSlice.userSlice);
@@ -24,6 +26,7 @@ const Signup = () => {
           userOrder: [],
         })
       );
+      form.resetFields();
     } else {
       message.error("username already exist please try anything else");
     }
@@ -41,6 +44,7 @@ const Signup = () => {
   return (
     <div className="login">
       <Form
+        form={form}
         name="basic"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
@@ -76,10 +80,13 @@ const Signup = () => {
           <Button type="primary" htmlType="submit">
             Submit
           </Button>
+        </Form.Item>
+        <h1>
+          Click to{" "}
           <Link to="/login" className="ms-2">
             Login
           </Link>
-        </Form.Item>
+        </h1>
       </Form>
     </div>
   );

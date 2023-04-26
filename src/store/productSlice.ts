@@ -77,6 +77,7 @@ const cart: cartState = {
   cartVolume: 0,
   totalAmt: 0,
 };
+
 const getUserDetailFromLocalStorage = (): [] => {
   let taskBox = localStorage.getItem("user-detail");
   if (taskBox) {
@@ -85,9 +86,11 @@ const getUserDetailFromLocalStorage = (): [] => {
     return [];
   }
 };
+
 const setTodoOnLocalStorage = (state: userState[]) => {
   localStorage.setItem("user-detail", JSON.stringify(state));
 };
+
 const userDetails: userState[] = getUserDetailFromLocalStorage();
 
 export const fetchLimitedProducts = createAsyncThunk(

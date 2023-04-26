@@ -13,7 +13,9 @@ const User: React.FC<prop> = ({ name }) => {
     let userIndex = -1;
     dispatch(setLogStatus({ logged, userIndex }));
   };
+
   useEffect(() => {}, [dispatch]);
+
   return (
     <div className="container">
       <h1 className="mt-2">
