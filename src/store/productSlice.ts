@@ -4,7 +4,7 @@ import {
   PayloadAction,
   combineReducers,
 } from "@reduxjs/toolkit";
-import { CurrentUserState } from "./loginDetails";
+
 export interface ProductState {
   id: number;
   title: string;
@@ -47,7 +47,7 @@ export interface userState {
     password: string;
   };
   userCart: cartDetails[];
-  userOrder: [];
+  userOrder: cartDetails[];
 }
 export interface userCartState {
   userCart: cartDetails;
@@ -206,13 +206,16 @@ export const userSlice = createSlice({
       let find = state[action.payload.index].userCart.findIndex(
         (ele) => ele.item.id === action.payload.userCart.item.id
       );
-      console.log(find);
       if (find >= 0) {
         state[action.payload.index].userCart[find].quantity += 1;
       } else {
         state[action.payload.index].userCart.push(action.payload.userCart);
         setTodoOnLocalStorage(state);
       }
+    },
+    setMyorder(state, action: PayloadAction<userCartState>) {
+      state[action.payload.index].userOrder =
+        state[action.payload.index].userCart;
     },
   },
 });
@@ -253,12 +256,15 @@ export const cartSlice = createSlice({
     clearCart(state) {
       state.AddedProducts = [];
     },
+    setCart(state, action: PayloadAction<cartDetails[]>) {
+      state.AddedProducts = action.payload;
+    },
   },
 });
 
-export const { addCart, deleteCartItem, addAndRemoveItem, clearCart } =
+export const { addCart, deleteCartItem, addAndRemoveItem, clearCart, setCart } =
   cartSlice.actions;
-export const { addUser, addUserCart } = userSlice.actions;
+export const { addUser, addUserCart, setMyorder } = userSlice.actions;
 
 export default combineReducers({
   product: productsSlice.reducer,

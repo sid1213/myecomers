@@ -6,6 +6,7 @@ import { setLogStatus } from "../store/loginDetails";
 import Style from "../style/User.module.scss";
 import type { MenuProps } from "antd";
 import Order from "./Order";
+import { clearCart } from "../store/productSlice";
 
 interface prop {
   name: string;
@@ -51,6 +52,7 @@ const User: React.FC<prop> = ({ name }) => {
     let logged = false;
     let userIndex = -1;
     dispatch(setLogStatus({ logged, userIndex }));
+    dispatch(clearCart());
   };
 
   useEffect(() => {}, [dispatch]);

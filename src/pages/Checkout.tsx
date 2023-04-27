@@ -9,16 +9,33 @@ import {
   Card,
   Row,
   Col,
+  message,
+  Modal,
 } from "antd";
 
-import { useAppSelector } from "../hooks";
-
-const onFinish = (values: any) => {
-  console.log(values);
-  values = [];
-};
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { useState } from "react";
+import { setMyorder } from "../store/productSlice";
 
 function Checkout() {
+  const dispatch = useAppDispatch();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const userCheck = useAppSelector((state) => state.userSlice.userSlice);
+
+  const userLoginStatus = useAppSelector((state) => state.currentUserSlice);
+
+  const onFinish = (values: any) => {
+    if (!userLoginStatus.logged) {
+      setIsModalOpen(true);
+    } else {
+      message.success("Order successful");
+      let userCart = userCheck[userLoginStatus.userIndex].userCart;
+      let index = userLoginStatus.userIndex;
+      // dispatch(setMyorder({ userCart, index }));
+    }
+  };
   const dataArr = useAppSelector(
     (state) => state.cartSlice.cartSlice.AddedProducts
   );
@@ -169,6 +186,17 @@ function Checkout() {
           </Card>
         </Col>
       </Row>
+      <Modal
+        open={isModalOpen}
+        onOk={() => {
+          setIsModalOpen(false);
+        }}
+        onCancel={() => {
+          setIsModalOpen(false);
+        }}
+      >
+        <p>Please Login Before checkout </p>
+      </Modal>
     </div>
   );
 }

@@ -11,8 +11,6 @@ import {
 import { useEffect } from "react";
 
 function SingleProduct() {
-  const userCheck = useAppSelector((state) => state.userSlice.userSlice);
-
   const userLoginStatus = useAppSelector((state) => state.currentUserSlice);
 
   let { id } = useParams();
