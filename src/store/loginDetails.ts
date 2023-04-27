@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface CurrentUserState {
+export interface CurrentUserState {
   userIndex: number;
   logged: boolean;
 }

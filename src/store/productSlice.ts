@@ -4,6 +4,7 @@ import {
   PayloadAction,
   combineReducers,
 } from "@reduxjs/toolkit";
+import { CurrentUserState } from "./loginDetails";
 export interface ProductState {
   id: number;
   title: string;
@@ -45,10 +46,13 @@ export interface userState {
     userName: string;
     password: string;
   };
-  userCart: [];
+  userCart: cartDetails[];
   userOrder: [];
 }
-
+export interface userCartState {
+  userCart: cartDetails;
+  index: number;
+}
 const initialState: AllProductState = {
   items: [],
   loading: true,
@@ -190,12 +194,34 @@ export const singleProductSlice = createSlice({
   },
 });
 
+export const userSlice = createSlice({
+  name: "user",
+  initialState: userDetails,
+  reducers: {
+    addUser(state, action: PayloadAction<userState>) {
+      state.push(action.payload);
+      setTodoOnLocalStorage(state);
+    },
+    addUserCart(state, action: PayloadAction<userCartState>) {
+      let find = state[action.payload.index].userCart.findIndex(
+        (ele) => ele.item.id === action.payload.userCart.item.id
+      );
+      console.log(find);
+      if (find >= 0) {
+        state[action.payload.index].userCart[find].quantity += 1;
+      } else {
+        state[action.payload.index].userCart.push(action.payload.userCart);
+        setTodoOnLocalStorage(state);
+      }
+    },
+  },
+});
+
 export const cartSlice = createSlice({
   name: "cart",
   initialState: cart,
   reducers: {
     addCart(state, action: PayloadAction<cartDetails>) {
-      console.log(action.payload);
       let find = state.AddedProducts.findIndex(
         (ele) => ele.item.id === action.payload.item.id
       );
@@ -224,22 +250,15 @@ export const cartSlice = createSlice({
         state.AddedProducts[find].quantity += 1;
       }
     },
-  },
-});
-
-export const userSlice = createSlice({
-  name: "user",
-  initialState: userDetails,
-  reducers: {
-    addUser(state, action: PayloadAction<userState>) {
-      state.push(action.payload);
-      setTodoOnLocalStorage(state);
+    clearCart(state) {
+      state.AddedProducts = [];
     },
   },
 });
 
-export const { addCart, deleteCartItem, addAndRemoveItem } = cartSlice.actions;
-export const { addUser } = userSlice.actions;
+export const { addCart, deleteCartItem, addAndRemoveItem, clearCart } =
+  cartSlice.actions;
+export const { addUser, addUserCart } = userSlice.actions;
 
 export default combineReducers({
   product: productsSlice.reducer,

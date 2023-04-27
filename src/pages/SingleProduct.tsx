@@ -4,19 +4,20 @@ import { Button, Card, Skeleton, Image } from "antd";
 import { useAppSelector, useAppDispatch } from "../hooks";
 import {
   addCart,
+  addUserCart,
   fetchLimitedProducts,
   fetchSingleProduct,
 } from "../store/productSlice";
 import { useEffect } from "react";
 
 function SingleProduct() {
+  const userCheck = useAppSelector((state) => state.userSlice.userSlice);
+
+  const userLoginStatus = useAppSelector((state) => state.currentUserSlice);
+
   let { id } = useParams();
 
   const dispatch = useAppDispatch();
-
-  const cart = useAppSelector((state) => state.cartSlice.cartSlice);
-
-  console.log(cart);
 
   const { myerror, item, myloading } = useAppSelector(
     (state) => state.myProducts.singleProductSlice
@@ -33,6 +34,14 @@ function SingleProduct() {
   const addToCart = () => {
     if (myloading) {
       dispatch(addCart({ item, quantity }));
+    }
+    if (userLoginStatus.logged) {
+      let userCart = {
+        item,
+        quantity,
+      };
+      let index = userLoginStatus.userIndex;
+      dispatch(addUserCart({ userCart, index }));
     }
   };
 

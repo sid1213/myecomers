@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../hooks";
 import { Link } from "react-router-dom";
 import { setLogStatus } from "../store/loginDetails";
 import User from "../components/User";
+import { clearCart } from "../store/productSlice";
 
 const Login: React.FC = () => {
   const userCheck = useAppSelector((state) => state.userSlice.userSlice);
@@ -23,6 +24,8 @@ const Login: React.FC = () => {
         message.success(userCheck[userIndex].user.name);
         let logged = true;
         dispatch(setLogStatus({ logged, userIndex }));
+
+        dispatch(clearCart());
       } else {
         message.error("wrong password");
       }
