@@ -17,16 +17,16 @@ function Products() {
   useEffect(() => {
     dispatch(fetchAllProducts());
     console.log(items);
-  }, []);
+  }, [dispatch]);
 
   return (
-    <div className="container">
+    <div className="container mb-2">
       <Row className={`mt-2 ${Style.row}`}>
         {loading ? (
           items.map((ele) => {
             return (
-              <Col xs={11} sm={7} md={6} lg={5} className="mb-2">
-                <Link to={`/products/${ele.id}`} key={ele.id}>
+              <Col xs={11} sm={7} md={6} lg={5} className="mb-2" key={ele.id}>
+                <Link to={`/products/${ele.id}`}>
                   <Card
                     className="productCard"
                     style={{ width: "100%" }}
@@ -46,21 +46,22 @@ function Products() {
             );
           })
         ) : (
-          <div className="loading">
+          <Row className="loading">
             {[...Array(5)].map((ele, index) => {
               return (
-                <Card
-                  key={index}
-                  cover={
-                    <Skeleton.Image active={false} className="cardSkeleton" />
-                  }
-                  style={{ width: 200 }}
-                >
-                  <Skeleton loading={true} active={false} />
-                </Card>
+                <Col key={index} xs={11} sm={7} md={6} lg={5} className="mb-2">
+                  <Card
+                    cover={
+                      <Skeleton.Image active={false} className="cardSkeleton" />
+                    }
+                    style={{ width: "100%" }}
+                  >
+                    <Skeleton loading={true} active={false} />
+                  </Card>
+                </Col>
               );
             })}
-          </div>
+          </Row>
         )}
       </Row>
     </div>

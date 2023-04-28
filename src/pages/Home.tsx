@@ -2,7 +2,7 @@ import { Carousel, Card, Button, Skeleton, Row, Col } from "antd";
 import img1 from "../images/MK.avif";
 import img2 from "../images/banner-1.avif";
 import { Link } from "react-router-dom";
-import { fetchLimitedProducts } from "../store/productSlice";
+import { fetchAllProducts, fetchLimitedProducts } from "../store/productSlice";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import Style from "../style/User.module.scss";
@@ -16,7 +16,7 @@ const Home: React.FC = () => {
   );
 
   useEffect(() => {
-    dispatch(fetchLimitedProducts("10"));
+    dispatch(fetchAllProducts());
   }, [dispatch]);
 
   return (
