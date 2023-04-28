@@ -4,9 +4,19 @@ export interface CurrentUserState {
   userIndex: number;
   logged: boolean;
 }
-const currentUser: CurrentUserState = {
-  userIndex: -1,
-  logged: false,
+export const getCurrentUser = (): CurrentUserState => {
+  let currentUserBox = sessionStorage.getItem("currentUser");
+  if (currentUserBox) {
+    return JSON.parse(currentUserBox || "");
+  } else {
+    return { userIndex: -1, logged: false };
+  }
+};
+
+const currentUser = getCurrentUser();
+
+export const setCurrentUser = (state: CurrentUserState) => {
+  sessionStorage.setItem("currentUser", JSON.stringify(state));
 };
 
 const currentUserSlice = createSlice({
@@ -16,6 +26,7 @@ const currentUserSlice = createSlice({
     setLogStatus(state, action: PayloadAction<CurrentUserState>) {
       state.userIndex = action.payload.userIndex;
       state.logged = action.payload.logged;
+      setCurrentUser(state);
     },
   },
 });
