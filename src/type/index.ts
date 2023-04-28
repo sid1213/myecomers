@@ -26,8 +26,6 @@ export interface CartDetails {
 }
 export interface CartState {
   AddedProducts: CartDetails[];
-  cartVolume: number;
-  totalAmt: number;
 }
 export interface AddAndRemoveItemState {
   id: ProductState["id"];
