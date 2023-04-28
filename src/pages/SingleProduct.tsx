@@ -17,7 +17,7 @@ function SingleProduct() {
 
   const dispatch = useAppDispatch();
 
-  const { myerror, item, myloading } = useAppSelector(
+  const { singleProductError, item, singleProductLoading } = useAppSelector(
     (state) => state.myProducts.singleProductSlice
   );
 
@@ -30,7 +30,7 @@ function SingleProduct() {
   const { Meta } = Card;
 
   const addToCart = () => {
-    if (myloading) {
+    if (singleProductLoading) {
       dispatch(addCart({ item, quantity }));
     }
     if (userLoginStatus.logged) {
@@ -50,7 +50,7 @@ function SingleProduct() {
 
   return (
     <div className="container">
-      {myloading ? (
+      {singleProductLoading ? (
         <div className="singleProduct">
           <div className="leftcontet">
             <Image src={item.image} alt="img" className="priviewImg" />
