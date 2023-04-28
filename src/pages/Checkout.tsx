@@ -69,29 +69,6 @@ function Checkout() {
               >
                 <Input />
               </Form.Item>
-              <Form.Item
-                label="Country"
-                name="country"
-                rules={[{ required: true }]}
-              >
-                <Select>
-                  <Select.Option value="demo">Demo</Select.Option>
-                </Select>
-              </Form.Item>
-              <Form.Item
-                label="State"
-                name="state"
-                rules={[{ required: true }]}
-              >
-                <Cascader
-                  options={[
-                    {
-                      value: "zhejiang",
-                      label: "Zhejiang",
-                    },
-                  ]}
-                />
-              </Form.Item>
 
               <Form.Item
                 label="Address"
@@ -100,6 +77,7 @@ function Checkout() {
               >
                 <Input />
               </Form.Item>
+
               <Form.Item
                 label="PinCode"
                 name="pincode"
