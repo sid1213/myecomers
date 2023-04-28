@@ -4,13 +4,7 @@ import {
   PayloadAction,
   combineReducers,
 } from "@reduxjs/toolkit";
-import {
-  AllProductState,
-  SingleProductState,
-  UserOrderState,
-  userCartState,
-  userState,
-} from "../type/index";
+import { AllProductState, SingleProductState, userState } from "../type/index";
 
 const initialState: AllProductState = {
   items: [],
@@ -35,7 +29,7 @@ const singleProduct: SingleProductState = {
   myerror: "",
 };
 
-const getUserDetailFromLocalStorage = (): [] => {
+export const getUserDetailFromLocalStorage = (): [] => {
   let taskBox = localStorage.getItem("user-detail");
   if (taskBox) {
     return JSON.parse(taskBox || "");
@@ -44,11 +38,9 @@ const getUserDetailFromLocalStorage = (): [] => {
   }
 };
 
-const setTodoOnLocalStorage = (state: userState[]) => {
+export const setTodoOnLocalStorage = (state: userState[]) => {
   localStorage.setItem("user-detail", JSON.stringify(state));
 };
-
-const userDetails: userState[] = getUserDetailFromLocalStorage();
 
 export const fetchLimitedProducts = createAsyncThunk(
   "Limitedproducts",
@@ -147,40 +139,7 @@ export const singleProductSlice = createSlice({
   },
 });
 
-export const userSlice = createSlice({
-  name: "user",
-  initialState: userDetails,
-  reducers: {
-    addUser(state, action: PayloadAction<userState>) {
-      state.push(action.payload);
-      setTodoOnLocalStorage(state);
-    },
-    addUserCart(state, action: PayloadAction<userCartState>) {
-      let find = state[action.payload.index].userCart.findIndex(
-        (ele) => ele.item.id === action.payload.userCart.item.id
-      );
-      if (find >= 0) {
-        state[action.payload.index].userCart[find].quantity += 1;
-      } else {
-        state[action.payload.index].userCart.push(action.payload.userCart);
-        setTodoOnLocalStorage(state);
-      }
-    },
-    setMyorder(state, action: PayloadAction<UserOrderState>) {
-      state[action.payload.index].userOrder = [
-        ...state[action.payload.index].userOrder,
-        ...action.payload.userCart,
-      ];
-      state[action.payload.index].userCart = [];
-      setTodoOnLocalStorage(state);
-    },
-  },
-});
-
-export const { addUser, addUserCart, setMyorder } = userSlice.actions;
-
 export default combineReducers({
   product: productsSlice.reducer,
   singleProductSlice: singleProductSlice.reducer,
-  userSlice: userSlice.reducer,
 });

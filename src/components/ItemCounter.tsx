@@ -1,7 +1,8 @@
 import { MinusCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { useAppDispatch } from "../hooks";
-import { addAndRemoveItem } from "../store/productSlice";
+
 import { useEffect } from "react";
+import { addAndRemoveItem } from "../store/cartSlice";
 
 interface propState {
   id: number;

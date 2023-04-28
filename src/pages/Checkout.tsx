@@ -15,14 +15,15 @@ import {
 
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { useState } from "react";
-import { clearCart, setMyorder } from "../store/productSlice";
+import { setMyorder } from "../store/userSlice";
+import { clearCart } from "../store/cartSlice";
 
 function Checkout() {
   const dispatch = useAppDispatch();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const userCheck = useAppSelector((state) => state.userSlice.userSlice);
+  const userCheck = useAppSelector((state) => state.userSlice);
 
   const userLoginStatus = useAppSelector((state) => state.currentUserSlice);
 
@@ -38,9 +39,7 @@ function Checkout() {
       dispatch(clearCart());
     }
   };
-  const dataArr = useAppSelector(
-    (state) => state.cartSlice.cartSlice.AddedProducts
-  );
+  const dataArr = useAppSelector((state) => state.cartSlice.AddedProducts);
 
   return (
     <div className="container checkoutMain">

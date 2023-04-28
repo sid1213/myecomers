@@ -14,9 +14,7 @@ import { useAppSelector } from "../hooks";
 function Header() {
   const [open, setOpen] = useState(false); //to open Drawer
 
-  const cartLength = useAppSelector(
-    (state) => state.cartSlice.cartSlice.AddedProducts
-  );
+  const cartLength = useAppSelector((state) => state.cartSlice.AddedProducts);
 
   const showDrawer = () => {
     setOpen(true);

@@ -3,12 +3,12 @@ import { StarFilled } from "@ant-design/icons";
 import { Button, Card, Skeleton, Image } from "antd";
 import { useAppSelector, useAppDispatch } from "../hooks";
 import {
-  addCart,
-  addUserCart,
   fetchLimitedProducts,
   fetchSingleProduct,
 } from "../store/productSlice";
 import { useEffect } from "react";
+import { addUserCart } from "../store/userSlice";
+import { addCart } from "../store/cartSlice";
 
 function SingleProduct() {
   const userLoginStatus = useAppSelector((state) => state.currentUserSlice);

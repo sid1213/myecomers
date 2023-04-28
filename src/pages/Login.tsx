@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Form, Input, message } from "antd";
+import React, { useEffect } from "react";
+import { Button, Form, Input, message } from "antd";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { Link } from "react-router-dom";
 import { setLogStatus } from "../store/loginDetails";
 import User from "../components/User";
-import { setCart } from "../store/productSlice";
+import { setCart } from "../store/cartSlice";
 
 const Login: React.FC = () => {
-  const userCheck = useAppSelector((state) => state.userSlice.userSlice);
+  const userCheck = useAppSelector((state) => state.userSlice);
 
   const userLoginStatus = useAppSelector((state) => state.currentUserSlice);
 

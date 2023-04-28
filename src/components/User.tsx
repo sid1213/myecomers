@@ -6,7 +6,7 @@ import { setLogStatus } from "../store/loginDetails";
 import Style from "../style/User.module.scss";
 import type { MenuProps } from "antd";
 import Order from "./Order";
-import { clearCart } from "../store/productSlice";
+import { clearCart } from "../store/cartSlice";
 
 interface prop {
   name: string;
@@ -34,7 +34,7 @@ const rootSubmenuKeys = ["sub1"];
 const User: React.FC<prop> = ({ name }) => {
   const dispatch = useAppDispatch();
 
-  const userCheck = useAppSelector((state) => state.userSlice.userSlice);
+  const userCheck = useAppSelector((state) => state.userSlice);
 
   const userLoginStatus = useAppSelector((state) => state.currentUserSlice);
 

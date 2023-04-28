@@ -1,7 +1,7 @@
 import { Button, Form, Input, message } from "antd";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { useEffect } from "react";
-import { addUser } from "../store/productSlice";
+import { addUser } from "../store/userSlice";
 import { Link } from "react-router-dom";
 
 const Signup = () => {
@@ -9,7 +9,7 @@ const Signup = () => {
 
   const dispatch = useAppDispatch();
 
-  const userCheck = useAppSelector((state) => state.userSlice.userSlice);
+  const userCheck = useAppSelector((state) => state.userSlice);
 
   const onFinish = (values: any) => {
     if (!userCheck.find((ele) => ele.user.userName === values.username)) {

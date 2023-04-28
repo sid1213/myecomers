@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { DeleteFilled } from "@ant-design/icons";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { deleteCartItem } from "../store/productSlice";
+import { deleteCartItem } from "../store/cartSlice";
 
 function MiniCart() {
   const miniCartItems = useAppSelector(
-    (state) => state.cartSlice.cartSlice.AddedProducts
+    (state) => state.cartSlice.AddedProducts
   );
   const dispatch = useAppDispatch();
   const deleteItem = (id: number) => {
