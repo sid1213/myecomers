@@ -25,8 +25,8 @@ const singleProduct: SingleProductState = {
       count: 0,
     },
   },
-  myloading: true,
-  myerror: "",
+  singleProductLoading: true,
+  singleProductError: "",
 };
 
 export const getUserDetailFromLocalStorage = (): [] => {
@@ -136,12 +136,12 @@ export const singleProductSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchSingleProduct.pending, (state) => {
-        state.myloading = false;
+        state.singleProductLoading = false;
       })
       .addCase(
         fetchSingleProduct.fulfilled,
         (state, action: PayloadAction<SingleProductState["item"]>) => {
-          state.myloading = true;
+          state.singleProductLoading = true;
           state.item = action.payload;
         }
       );

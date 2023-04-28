@@ -17,8 +17,8 @@ export interface AllProductState {
 }
 export interface SingleProductState {
   item: ProductState;
-  myloading: boolean;
-  myerror: null | string;
+  singleProductLoading: boolean;
+  singleProductError: null | string;
 }
 export interface CartDetails {
   item: ProductState;
