@@ -3,8 +3,6 @@ import { AddAndRemoveItemState, CartDetails, CartState } from "../type/index";
 
 const cart: CartState = {
   AddedProducts: [],
-  cartVolume: 0,
-  totalAmt: 0,
 };
 
 export const cartSlice = createSlice({
