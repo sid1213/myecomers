@@ -15,7 +15,7 @@ import {
 
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { useState } from "react";
-import { setMyorder } from "../store/productSlice";
+import { clearCart, setMyorder } from "../store/productSlice";
 
 function Checkout() {
   const dispatch = useAppDispatch();
@@ -33,7 +33,9 @@ function Checkout() {
       message.success("Order successful");
       let userCart = userCheck[userLoginStatus.userIndex].userCart;
       let index = userLoginStatus.userIndex;
-      // dispatch(setMyorder({ userCart, index }));
+      console.log(index);
+      dispatch(setMyorder({ userCart, index }));
+      dispatch(clearCart());
     }
   };
   const dataArr = useAppSelector(

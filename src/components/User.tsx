@@ -1,7 +1,7 @@
 import { Button, Col, Menu, Row, Tag } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
-import { useAppDispatch } from "../hooks";
+import { useAppDispatch, useAppSelector } from "../hooks";
 import { setLogStatus } from "../store/loginDetails";
 import Style from "../style/User.module.scss";
 import type { MenuProps } from "antd";
@@ -29,13 +29,24 @@ function getItem(
 
 type MenuItem = Required<MenuProps>["items"][number];
 
-const items: MenuItem[] = [
-  getItem("My orders", "sub1", <InboxOutlined />, [getItem(<Order />, "1")]),
-];
 const rootSubmenuKeys = ["sub1"];
 
 const User: React.FC<prop> = ({ name }) => {
   const dispatch = useAppDispatch();
+
+  const userCheck = useAppSelector((state) => state.userSlice.userSlice);
+
+  const userLoginStatus = useAppSelector((state) => state.currentUserSlice);
+
+  const CurrentuserOrder = userCheck[userLoginStatus.userIndex].userOrder.map(
+    (ele) => {
+      console.log(ele);
+      return getItem(<Order ele={ele} />, "1");
+    }
+  );
+  const items: MenuItem[] = [
+    getItem("My orders", "sub1", <InboxOutlined />, [...CurrentuserOrder]),
+  ];
 
   const [openKeys, setOpenKeys] = useState(["sub1"]);
 

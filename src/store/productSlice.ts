@@ -53,6 +53,10 @@ export interface userCartState {
   userCart: cartDetails;
   index: number;
 }
+export interface UserOrderState {
+  userCart: userState["userCart"];
+  index: number;
+}
 const initialState: AllProductState = {
   items: [],
   loading: true,
@@ -213,9 +217,14 @@ export const userSlice = createSlice({
         setTodoOnLocalStorage(state);
       }
     },
-    setMyorder(state, action: PayloadAction<userCartState>) {
-      state[action.payload.index].userOrder =
-        state[action.payload.index].userCart;
+    setMyorder(state, action: PayloadAction<UserOrderState>) {
+      // state[action.payload.index].userOrder = action.payload.userCart;
+      state[action.payload.index].userOrder = [
+        ...state[action.payload.index].userOrder,
+        ...action.payload.userCart,
+      ];
+      state[action.payload.index].userCart = [];
+      setTodoOnLocalStorage(state);
     },
   },
 });

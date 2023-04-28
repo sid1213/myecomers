@@ -1,24 +1,29 @@
 import { Col, Row } from "antd";
 import Style from "../style/User.module.scss";
 import logo from "../images/logo.png";
+import { cartDetails } from "../store/productSlice";
 
-function Order() {
+interface propState {
+  ele: cartDetails;
+}
+const Order: React.FC<propState> = ({ ele }) => {
   return (
     <div>
+      {}
       <Row className={`${Style.row}`}>
         <Col>
           <img
-            src={logo}
+            src={ele.item.image}
             alt=""
             style={{ width: "40px", objectFit: "contain" }}
           />
         </Col>
-        <Col>hello</Col>
-        <Col>hello</Col>
-        <Col>bhai</Col>
+        <Col>{ele.item.title}</Col>
+        <Col>{ele.quantity}</Col>
+        <Col>${ele.item.price * ele.quantity}</Col>
       </Row>
     </div>
   );
-}
+};
 
 export default Order;
