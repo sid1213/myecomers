@@ -9,8 +9,8 @@ import {
   AllProductState,
   SingleProductState,
   UserOrderState,
-  cartDetails,
-  cartState,
+  CartDetails,
+  CartState,
   userCartState,
   userState,
 } from "../type/index";
@@ -38,7 +38,7 @@ const singleProduct: SingleProductState = {
   myerror: "",
 };
 
-const cart: cartState = {
+const cart: CartState = {
   AddedProducts: [],
   cartVolume: 0,
   totalAmt: 0,
@@ -191,7 +191,7 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState: cart,
   reducers: {
-    addCart(state, action: PayloadAction<cartDetails>) {
+    addCart(state, action: PayloadAction<CartDetails>) {
       let find = state.AddedProducts.findIndex(
         (ele) => ele.item.id === action.payload.item.id
       );
@@ -201,7 +201,7 @@ export const cartSlice = createSlice({
         state.AddedProducts.push(action.payload);
       }
     },
-    deleteCartItem(state, action: PayloadAction<cartDetails["item"]["id"]>) {
+    deleteCartItem(state, action: PayloadAction<CartDetails["item"]["id"]>) {
       state.AddedProducts = state.AddedProducts.filter(
         (ele) => ele.item.id !== action.payload
       );
@@ -223,7 +223,7 @@ export const cartSlice = createSlice({
     clearCart(state) {
       state.AddedProducts = [];
     },
-    setCart(state, action: PayloadAction<cartDetails[]>) {
+    setCart(state, action: PayloadAction<CartDetails[]>) {
       state.AddedProducts = action.payload;
     },
   },

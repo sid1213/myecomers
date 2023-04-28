@@ -20,12 +20,12 @@ export interface SingleProductState {
   myloading: boolean;
   myerror: null | string;
 }
-export interface cartDetails {
+export interface CartDetails {
   item: ProductState;
   quantity: number;
 }
-export interface cartState {
-  AddedProducts: cartDetails[];
+export interface CartState {
+  AddedProducts: CartDetails[];
   cartVolume: number;
   totalAmt: number;
 }
@@ -39,11 +39,11 @@ export interface userState {
     userName: string;
     password: string;
   };
-  userCart: cartDetails[];
-  userOrder: cartDetails[];
+  userCart: CartDetails[];
+  userOrder: CartDetails[];
 }
 export interface userCartState {
-  userCart: cartDetails;
+  userCart: CartDetails;
   index: number;
 }
 export interface UserOrderState {
