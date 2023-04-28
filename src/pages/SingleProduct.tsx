@@ -22,7 +22,7 @@ function SingleProduct() {
   );
 
   const { error, items, loading } = useAppSelector(
-    (state) => state.myProducts.product
+    (state) => state.myProducts.limitedProductSlice
   );
 
   let quantity = 1; //initial quantity

@@ -106,7 +106,16 @@ export const productsSlice = createSlice({
           state.loading = true;
           state.items = action.payload;
         }
-      )
+      );
+  },
+});
+
+export const limitedProductSlice = createSlice({
+  name: "limitedSlice",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
       .addCase(fetchAllProducts.pending, (state) => {
         state.loading = false;
       })
@@ -142,4 +151,5 @@ export const singleProductSlice = createSlice({
 export default combineReducers({
   product: productsSlice.reducer,
   singleProductSlice: singleProductSlice.reducer,
+  limitedProductSlice: limitedProductSlice.reducer,
 });
