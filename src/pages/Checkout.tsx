@@ -58,14 +58,14 @@ function Checkout() {
               <Form.Item
                 label="Name"
                 name="name"
-                rules={[{ required: true, type: "string", message: "shdgsh" }]}
+                rules={[{ required: true, type: "string" }]}
               >
                 <Input />
               </Form.Item>
               <Form.Item
                 label="Last Name"
                 name="lname"
-                rules={[{ required: true, type: "string", message: "shdgsh" }]}
+                rules={[{ required: true, type: "string" }]}
               >
                 <Input />
               </Form.Item>
