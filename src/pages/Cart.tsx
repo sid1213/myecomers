@@ -5,6 +5,7 @@ import ItemCounter from "../components/ItemCounter";
 import { useEffect } from "react";
 import { deleteCartItem } from "../store/productSlice";
 import { Link } from "react-router-dom";
+
 function Cart() {
   const dataArr = useAppSelector(
     (state) => state.cartSlice.cartSlice.AddedProducts
