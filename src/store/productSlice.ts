@@ -97,11 +97,11 @@ export const productsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchLimitedProducts.pending, (state) => {
+      .addCase(fetchAllProducts.pending, (state) => {
         state.loading = false;
       })
       .addCase(
-        fetchLimitedProducts.fulfilled,
+        fetchAllProducts.fulfilled,
         (state, action: PayloadAction<AllProductState["items"]>) => {
           state.loading = true;
           state.items = action.payload;
@@ -116,11 +116,11 @@ export const limitedProductSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllProducts.pending, (state) => {
+      .addCase(fetchLimitedProducts.pending, (state) => {
         state.loading = false;
       })
       .addCase(
-        fetchAllProducts.fulfilled,
+        fetchLimitedProducts.fulfilled,
         (state, action: PayloadAction<AllProductState["items"]>) => {
           state.loading = true;
           state.items = action.payload;
