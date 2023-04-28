@@ -1,10 +1,9 @@
 import { Col, Row } from "antd";
 import Style from "../style/User.module.scss";
-import logo from "../images/logo.png";
-import { cartDetails } from "../store/productSlice";
+import { CartDetails } from "../type/index";
 
 interface propState {
-  ele: cartDetails;
+  ele: CartDetails;
 }
 const Order: React.FC<propState> = ({ ele }) => {
   return (

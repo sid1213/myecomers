@@ -3,13 +3,12 @@ import { useAppDispatch, useAppSelector } from "../hooks";
 import { DeleteOutlined } from "@ant-design/icons";
 import ItemCounter from "../components/ItemCounter";
 import { useEffect } from "react";
-import { deleteCartItem } from "../store/productSlice";
+import { deleteCartItem } from "../store/cartSlice";
 import { Link } from "react-router-dom";
 
 function Cart() {
-  const dataArr = useAppSelector(
-    (state) => state.cartSlice.cartSlice.AddedProducts
-  );
+  const dataArr = useAppSelector((state) => state.cartSlice.AddedProducts);
+
   const dispatch = useAppDispatch();
   useEffect(() => {}, [dispatch]);
   const dataSource = dataArr.map((ele) => {
