@@ -63,6 +63,9 @@ function SingleProduct() {
 
             <p>{item.description}</p>
             <div className="rating">
+              {`(Reviewed by :${item.rating.count}peopls) `}
+              <br />
+              <br />
               {[...Array(Math.ceil(item.rating.rate))].map((ele, index) => {
                 return <StarFilled key={index} />;
               })}

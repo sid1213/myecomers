@@ -88,8 +88,14 @@ const Home: React.FC = () => {
                     <Link to={`/products/${ele.id}`} key={ele.id}>
                       <Card
                         className="productCard"
-                        style={{ width: 200 }}
-                        cover={<img alt={ele.title} src={ele.image} />}
+                        style={{ width: "100%" }}
+                        cover={
+                          <img
+                            alt={ele.title}
+                            src={ele.image}
+                            style={{ width: "100%" }}
+                          />
+                        }
                         actions={[<h1>${ele.price}</h1>]}
                       >
                         <Meta title={ele.title} description={ele.category} />

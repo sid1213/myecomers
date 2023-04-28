@@ -1,8 +1,10 @@
-import { Card, Skeleton } from "antd";
+import { Card, Col, Row, Skeleton } from "antd";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { fetchAllProducts } from "../store/productSlice";
+import Style from "../style/User.module.scss";
+
 const { Meta } = Card;
 
 function Products() {
@@ -15,24 +17,32 @@ function Products() {
   useEffect(() => {
     dispatch(fetchAllProducts());
     console.log(items);
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className="container">
-      <div className=" product-main">
+      <Row className={`mt-2 ${Style.row}`}>
         {loading ? (
           items.map((ele) => {
             return (
-              <Link to={`/products/${ele.id}`} key={ele.id}>
-                <Card
-                  className="productCard"
-                  style={{ width: 200 }}
-                  cover={<img alt={ele.title} src={ele.image} />}
-                  actions={[<h1>${ele.price}</h1>]}
-                >
-                  <Meta title={ele.title} description={ele.category} />
-                </Card>
-              </Link>
+              <Col xs={11} sm={7} md={6} lg={5} className="mb-2">
+                <Link to={`/products/${ele.id}`} key={ele.id}>
+                  <Card
+                    className="productCard"
+                    style={{ width: "100%" }}
+                    cover={
+                      <img
+                        alt={ele.title}
+                        src={ele.image}
+                        style={{ width: "100%" }}
+                      />
+                    }
+                    actions={[<h1>${ele.price}</h1>]}
+                  >
+                    <Meta title={ele.title} description={ele.category} />
+                  </Card>
+                </Link>
+              </Col>
             );
           })
         ) : (
@@ -52,7 +62,7 @@ function Products() {
             })}
           </div>
         )}
-      </div>
+      </Row>
     </div>
   );
 }

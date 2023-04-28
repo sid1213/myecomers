@@ -10,7 +10,9 @@ function Cart() {
   const dataArr = useAppSelector((state) => state.cartSlice.AddedProducts);
 
   const dispatch = useAppDispatch();
+
   useEffect(() => {}, [dispatch]);
+
   const dataSource = dataArr.map((ele) => {
     return {
       img: (
