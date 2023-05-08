@@ -17,11 +17,11 @@ function SingleProduct() {
 
   const dispatch = useAppDispatch();
 
-  const { singleProductError, item, singleProductLoading } = useAppSelector(
+  const singleProduct = useAppSelector(
     (state) => state.myProducts.singleProductSlice
   );
 
-  const { error, items, loading } = useAppSelector(
+  const products = useAppSelector(
     (state) => state.myProducts.limitedProductSlice
   );
 
@@ -30,7 +30,8 @@ function SingleProduct() {
   const { Meta } = Card;
 
   const addToCart = () => {
-    if (singleProductLoading) {
+    let item = singleProduct.item;
+    if (singleProduct.singleProductLoading) {
       dispatch(addCart({ item, quantity }));
     }
     if (userLoginStatus.logged) {
@@ -50,25 +51,31 @@ function SingleProduct() {
 
   return (
     <div className="container">
-      {singleProductLoading ? (
+      {singleProduct.singleProductLoading ? (
         <div className="singleProduct">
           <div className="leftcontet">
-            <Image src={item.image} alt="img" className="priviewImg" />
+            <Image
+              src={singleProduct.item.image}
+              alt="img"
+              className="priviewImg"
+            />
           </div>
 
           <div className="rightContent">
-            <h1>{item.title}</h1>
-            <h2>{item.category}</h2>
-            <span>${item.price}</span>
+            <h1>{singleProduct.item.title}</h1>
+            <h2>{singleProduct.item.category}</h2>
+            <span>${singleProduct.item.price}</span>
 
-            <p>{item.description}</p>
+            <p>{singleProduct.item.description}</p>
             <div className="rating">
-              {`(Reviewed by :${item.rating.count}peopls) `}
+              {`(Reviewed by :${singleProduct.item.rating.count}peopls) `}
               <br />
               <br />
-              {[...Array(Math.ceil(item.rating.rate))].map((ele, index) => {
-                return <StarFilled key={index} />;
-              })}
+              {[...Array(Math.ceil(singleProduct.item.rating.rate))].map(
+                (ele, index) => {
+                  return <StarFilled key={index} />;
+                }
+              )}
             </div>
             <Button type="primary" onClick={addToCart}>
               Add to cart
@@ -84,9 +91,9 @@ function SingleProduct() {
       )}
 
       <div className=" product-main">
-        {loading ? (
-          items
-            .filter((ele) => ele.id !== item.id)
+        {products.loading ? (
+          products.items
+            .filter((ele) => ele.id !== singleProduct.item.id)
             .map((ele) => {
               return (
                 <Link to={`/products/${ele.id}`} key={ele.id}>

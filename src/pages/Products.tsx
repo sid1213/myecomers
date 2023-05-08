@@ -3,27 +3,24 @@ import { useAppDispatch, useAppSelector } from "../hooks";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { fetchAllProducts } from "../store/productSlice";
-import Style from "../style/User.module.scss";
+import Style from "../components/User/style.module.scss";
 
 const { Meta } = Card;
 
 function Products() {
   const dispatch = useAppDispatch();
 
-  const { error, items, loading } = useAppSelector(
-    (state) => state.myProducts.product
-  );
+  const products = useAppSelector((state) => state.myProducts.product);
 
   useEffect(() => {
     dispatch(fetchAllProducts());
-    console.log(items);
   }, [dispatch]);
 
   return (
     <div className="container mb-2">
       <Row className={`mt-2 ${Style.row}`}>
-        {loading ? (
-          items.map((ele) => {
+        {products.loading ? (
+          products.items.map((ele) => {
             return (
               <Col xs={11} sm={7} md={6} lg={5} className="mb-2" key={ele.id}>
                 <Link to={`/products/${ele.id}`}>
