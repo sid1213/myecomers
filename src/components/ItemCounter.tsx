@@ -1,6 +1,5 @@
 import { MinusCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { useAppDispatch } from "../hooks";
-
 import { useEffect } from "react";
 import { addAndRemoveItem } from "../store/cartSlice";
 

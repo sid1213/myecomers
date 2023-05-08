@@ -1,55 +1,17 @@
-import React, { useEffect } from "react";
-import { DeleteFilled } from "@ant-design/icons";
-import { useAppDispatch, useAppSelector } from "../hooks";
-import { deleteCartItem } from "../store/cartSlice";
+import { useAppSelector } from "../hooks";
+import CartItems from "./CartItems";
 
 function MiniCart() {
   const miniCartItems = useAppSelector(
     (state) => state.cartSlice.AddedProducts
   );
-  const dispatch = useAppDispatch();
-  const deleteItem = (id: number) => {
-    dispatch(deleteCartItem(id));
-  };
-
-  useEffect(() => {}, [dispatch, miniCartItems]);
 
   return (
     <div className="minicart ">
       <div className="cartContent">
         {miniCartItems.length
           ? miniCartItems.map((ele) => {
-              return (
-                <div className="cartItem">
-                  <div className="item">
-                    <div className="imgContainer">
-                      <img
-                        src={ele.item.image}
-                        alt=""
-                        style={{
-                          width: "50px",
-                          height: "50px",
-                          objectFit: "cover",
-                        }}
-                      />
-                    </div>
-                    <div className="itemDetail">
-                      <h4>{ele.item.title}</h4>
-                      <p>
-                        {ele.quantity} × ${ele.item.price}
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    className="dltItem"
-                    onClick={() => {
-                      deleteItem(ele.item.id);
-                    }}
-                  >
-                    <DeleteFilled />
-                  </div>
-                </div>
-              );
+              return <CartItems item={ele.item} quantity={ele.quantity} />;
             })
           : "No Product"}
       </div>

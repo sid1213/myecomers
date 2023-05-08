@@ -1,11 +1,9 @@
 import {
   Button,
-  Cascader,
   Form,
   Input,
   InputNumber,
   Radio,
-  Select,
   Card,
   Row,
   Col,
@@ -42,7 +40,7 @@ function Checkout() {
   const dataArr = useAppSelector((state) => state.cartSlice.AddedProducts);
 
   return (
-    <div className="container checkoutMain">
+    <div className="container checkoutMain mb-2">
       <h1 className="mt-2 mb-2">Checkout</h1>
       <hr />
       <Row className="mt-2">

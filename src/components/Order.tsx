@@ -1,5 +1,5 @@
 import { Col, Row } from "antd";
-import Style from "../style/User.module.scss";
+import Style from "./User/style.module.scss";
 import { CartDetails } from "../type/index";
 
 interface propState {

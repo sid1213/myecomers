@@ -1,12 +1,12 @@
 import { Button, Col, Menu, Row, Tag } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../hooks";
-import { setLogStatus } from "../store/loginDetails";
-import Style from "../style/User.module.scss";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { setLogStatus } from "../../store/loginDetails";
+import style from "./style.module.scss";
 import type { MenuProps } from "antd";
-import Order from "./Order";
-import { clearCart } from "../store/cartSlice";
+import Order from "../Order";
+import { clearCart } from "../../store/cartSlice";
 
 interface prop {
   name: string;
@@ -69,8 +69,8 @@ const User: React.FC<prop> = ({ name }) => {
   useEffect(() => {}, [dispatch]);
 
   return (
-    <div className={`container ${Style.user}`}>
-      <Row className={Style.row}>
+    <div className={`container ${style.user}`}>
+      <Row className={style.row}>
         <Col>
           <h1 className="mt-2">
             Welcome <Tag color="magenta"> {name}</Tag>
@@ -88,7 +88,7 @@ const User: React.FC<prop> = ({ name }) => {
         onOpenChange={onOpenChange}
         style={{ width: "100%" }}
         items={items}
-        className={`${Style.menu}`}
+        className={style.menu}
       />
     </div>
   );
