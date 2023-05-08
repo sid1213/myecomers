@@ -67,6 +67,25 @@ function Checkout() {
               >
                 <Input />
               </Form.Item>
+              <Form.Item
+                name={["user", "email"]}
+                label="Email"
+                rules={[{ type: "email" }]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                name="phone"
+                label="Phone Number"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your phone number!",
+                  },
+                ]}
+              >
+                <Input addonBefore={false} style={{ width: "100%" }} />
+              </Form.Item>
 
               <Form.Item
                 label="Address"
