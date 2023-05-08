@@ -14,7 +14,9 @@ import { useAppSelector } from "../hooks";
 function Header() {
   const [open, setOpen] = useState(false); //to open Drawer
 
-  const cartLength = useAppSelector((state) => state.cartSlice.AddedProducts);
+  const cartLength = useAppSelector(
+    (state) => state.cartSlice.AddedProducts.length
+  );
 
   const showDrawer = () => {
     setOpen(true);
@@ -65,7 +67,7 @@ function Header() {
 
               <li>
                 <Dropdown menu={{ items }}>
-                  <Badge count={cartLength.length} showZero size="small">
+                  <Badge count={cartLength} showZero size="small">
                     <Link to="/cart" onClick={(e) => e.stopPropagation()}>
                       <Avatar icon={<ShoppingCartOutlined />}></Avatar>
                     </Link>
@@ -104,7 +106,7 @@ function Header() {
                 </li>
                 <li>
                   <Link to="/cart" onClick={onClose}>
-                    <Badge count={cartLength.length} showZero size="small">
+                    <Badge count={cartLength} showZero size="small">
                       <Avatar icon={<ShoppingCartOutlined />}></Avatar>
                     </Badge>
                   </Link>
