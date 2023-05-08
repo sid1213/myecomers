@@ -44,20 +44,32 @@ function Products() {
           })
         ) : (
           <Row className="loading">
-            {[...Array(5)].map((ele, index) => {
-              return (
-                <Col key={index} xs={11} sm={7} md={6} lg={5} className="mb-2">
-                  <Card
-                    cover={
-                      <Skeleton.Image active={false} className="cardSkeleton" />
-                    }
-                    style={{ width: "100%" }}
+            {Array(5)
+              .fill(null)
+              .map((_, index) => {
+                return (
+                  <Col
+                    key={index}
+                    xs={11}
+                    sm={7}
+                    md={6}
+                    lg={5}
+                    className="mb-2"
                   >
-                    <Skeleton loading={true} active={false} />
-                  </Card>
-                </Col>
-              );
-            })}
+                    <Card
+                      cover={
+                        <Skeleton.Image
+                          active={false}
+                          className="cardSkeleton"
+                        />
+                      }
+                      style={{ width: "100%" }}
+                    >
+                      <Skeleton loading={true} active={false} />
+                    </Card>
+                  </Col>
+                );
+              })}
           </Row>
         )}
       </Row>

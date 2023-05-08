@@ -1,4 +1,4 @@
-import { Carousel, Card, Button, Skeleton, Row, Col } from "antd";
+import { Carousel, Card, Button, Skeleton, Row, Image } from "antd";
 import img1 from "../images/MK.avif";
 import img2 from "../images/banner-1.avif";
 import { Link } from "react-router-dom";
@@ -6,7 +6,7 @@ import { fetchAllProducts } from "../store/productSlice";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import Style from "../components/User/style.module.scss";
-const { Meta } = Card;
+import ProductList from "../components/CardColumn";
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -21,13 +21,13 @@ const Home: React.FC = () => {
     <div className="home">
       <Carousel className="carousel" autoplay={true} draggable>
         <div className="carousel-img">
-          <img src={img1} alt="" />
+          <Image preview={false} src={img1} alt="" />
         </div>
         <div className="carousel-img">
-          <img src={img2} alt="" />
+          <Image preview={false} src={img2} alt="" />
         </div>
         <div className="carousel-img">
-          <img src={img1} alt="" />
+          <Image preview={false} src={img1} alt="" />
         </div>
       </Carousel>
 
@@ -37,24 +37,13 @@ const Home: React.FC = () => {
           {products.loading ? (
             products.items.map((ele) => {
               return (
-                <Col xs={11} sm={7} md={6} lg={5} className="mb-2">
-                  <Link to={`/products/${ele.id}`} key={ele.id}>
-                    <Card
-                      className="productCard "
-                      style={{ width: "100%" }}
-                      cover={
-                        <img
-                          alt={ele.title}
-                          src={ele.image}
-                          style={{ width: "100%" }}
-                        />
-                      }
-                      actions={[<h1>${ele.price}</h1>]}
-                    >
-                      <Meta title={ele.title} description={ele.category} />
-                    </Card>
-                  </Link>
-                </Col>
+                <ProductList
+                  id={ele.id}
+                  title={ele.title}
+                  price={ele.price}
+                  image={ele.image}
+                  category={ele.category}
+                />
               );
             })
           ) : (
@@ -87,41 +76,35 @@ const Home: React.FC = () => {
               .filter((ele) => ele.category === "men's clothing")
               .map((ele) => {
                 return (
-                  <Col xs={11} sm={7} md={6} lg={5} className="mb-2">
-                    <Link to={`/products/${ele.id}`} key={ele.id}>
-                      <Card
-                        className="productCard"
-                        style={{ width: "100%" }}
-                        cover={
-                          <img
-                            alt={ele.title}
-                            src={ele.image}
-                            style={{ width: "100%" }}
-                          />
-                        }
-                        actions={[<h1>${ele.price}</h1>]}
-                      >
-                        <Meta title={ele.title} description={ele.category} />
-                      </Card>
-                    </Link>
-                  </Col>
+                  <ProductList
+                    id={ele.id}
+                    title={ele.title}
+                    price={ele.price}
+                    image={ele.image}
+                    category={ele.category}
+                  />
                 );
               })
           ) : (
             <div className="loading">
-              {[...Array(5)].map((ele, index) => {
-                return (
-                  <Card
-                    key={index}
-                    cover={
-                      <Skeleton.Image active={false} className="cardSkeleton" />
-                    }
-                    style={{ width: 200 }}
-                  >
-                    <Skeleton loading={true} active={false} />
-                  </Card>
-                );
-              })}
+              {Array(5)
+                .fill(null)
+                .map((_, index) => {
+                  return (
+                    <Card
+                      key={index}
+                      cover={
+                        <Skeleton.Image
+                          active={false}
+                          className="cardSkeleton"
+                        />
+                      }
+                      style={{ width: 200 }}
+                    >
+                      <Skeleton loading={true} active={false} />
+                    </Card>
+                  );
+                })}
             </div>
           )}
         </Row>
