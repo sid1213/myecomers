@@ -21,7 +21,8 @@ function MiniCart() {
           $
           {miniCartItems.length
             ? miniCartItems.reduce((total, ele) => {
-                return (total = total + ele.quantity * ele.item.price);
+                total = total + ele.quantity * ele.item.price;
+                return total;
               }, 0)
             : 0}
         </h3>
