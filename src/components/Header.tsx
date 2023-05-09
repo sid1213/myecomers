@@ -8,13 +8,23 @@ import {
 } from "@ant-design/icons";
 import { Badge, Avatar, Col, Row, Drawer, Button, Dropdown } from "antd";
 import MiniCart from "../components/MiniCart";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useAppSelector } from "../hooks";
 
 function Header() {
   const [open, setOpen] = useState(false); //to open Drawer
 
   const cartLength = useAppSelector((state) => state.cartSlice.AddedProducts);
+
+  const CalculatedValue = useMemo(() => {
+    // console.log("run");
+    return cartLength.length
+      ? cartLength.reduce((total, ele) => {
+          total = total + ele.quantity;
+          return total;
+        }, 0)
+      : 0;
+  }, [cartLength]);
 
   const showDrawer = () => {
     setOpen(true);
@@ -34,6 +44,7 @@ function Header() {
       ),
     },
   ];
+
   return (
     <header>
       <nav className="navBar container">
@@ -65,18 +76,7 @@ function Header() {
 
               <li>
                 <Dropdown menu={{ items }}>
-                  <Badge
-                    count={
-                      cartLength.length
-                        ? cartLength.reduce((total, ele) => {
-                            total = total + ele.quantity;
-                            return total;
-                          }, 0)
-                        : 0
-                    }
-                    showZero
-                    size="small"
-                  >
+                  <Badge count={CalculatedValue} showZero size="small">
                     <Link to="/cart" onClick={(e) => e.stopPropagation()}>
                       <Avatar icon={<ShoppingCartOutlined />}></Avatar>
                     </Link>
@@ -115,18 +115,7 @@ function Header() {
                 </li>
                 <li>
                   <Link to="/cart" onClick={onClose}>
-                    <Badge
-                      count={
-                        cartLength.length
-                          ? cartLength.reduce((total, ele) => {
-                              total = total + ele.quantity;
-                              return total;
-                            }, 0)
-                          : 0
-                      }
-                      showZero
-                      size="small"
-                    >
+                    <Badge count={CalculatedValue} showZero size="small">
                       <Avatar icon={<ShoppingCartOutlined />}></Avatar>
                     </Badge>
                   </Link>

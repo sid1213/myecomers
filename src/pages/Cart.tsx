@@ -2,7 +2,7 @@ import { Row, Col, Table, Image, Card, Button } from "antd";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { DeleteOutlined } from "@ant-design/icons";
 import ItemCounter from "../components/ItemCounter";
-import { useEffect } from "react";
+import { useCallback, useMemo } from "react";
 import { deleteCartItem } from "../store/cartSlice";
 import { Link } from "react-router-dom";
 
@@ -11,7 +11,21 @@ function Cart() {
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {}, [dispatch]);
+  const deleteItem = useCallback(
+    (id: number) => {
+      dispatch(deleteCartItem(id));
+    },
+    [dispatch]
+  );
+
+  const grandTotalValue = useMemo(() => {
+    return dataArr
+      .reduce(
+        (total, ele) => (total = total + ele.item.price * ele.quantity),
+        0
+      )
+      .toFixed(2);
+  }, [dataArr]);
 
   const dataSource = dataArr.map((ele) => {
     return {
@@ -27,9 +41,7 @@ function Cart() {
       price: `$${ele.item.price}`,
       quantity: <ItemCounter id={ele.item.id} quantity={ele.quantity} />,
       subtotal: `$${(ele.item.price * ele.quantity).toFixed(2)}`,
-      dump: (
-        <DeleteOutlined onClick={() => dispatch(deleteCartItem(ele.item.id))} />
-      ),
+      dump: <DeleteOutlined onClick={() => deleteItem(ele.item.id)} />,
     };
   });
 
@@ -65,6 +77,7 @@ function Cart() {
       key: "dump",
     },
   ];
+
   return (
     <div className="cartMain container ">
       <h1 className="mt-2 mb-1">CART</h1>
@@ -88,16 +101,7 @@ function Cart() {
                   </Col>
                   <Col span={12}>
                     {" "}
-                    <h1>
-                      $
-                      {dataArr
-                        .reduce(
-                          (total, ele) =>
-                            (total = total + ele.item.price * ele.quantity),
-                          0
-                        )
-                        .toFixed(2)}
-                    </h1>
+                    <h1>${grandTotalValue}</h1>
                   </Col>
                 </Row>
                 <br />
@@ -109,16 +113,7 @@ function Cart() {
                   </Col>
                   <Col span={12}>
                     {" "}
-                    <h1>
-                      $
-                      {dataArr
-                        .reduce(
-                          (total, ele) =>
-                            (total = total + ele.item.price * ele.quantity),
-                          0
-                        )
-                        .toFixed(2)}
-                    </h1>
+                    <h1>${grandTotalValue}</h1>
                   </Col>
                 </Row>
                 <Link to="/checkout">
